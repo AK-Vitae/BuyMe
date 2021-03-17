@@ -4,6 +4,6 @@
   * Contents of db.properties
 
     ```
-    username = "yourMySQLUsername" //e.g. "root"
-    password = "yourMySQLPassword" //e.g. "password"
+    username = yourMySQLUsername //e.g. root
+    password = yourMySQLPassword //e.g. password
     ```
