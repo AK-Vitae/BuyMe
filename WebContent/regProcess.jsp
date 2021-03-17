@@ -8,7 +8,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RegistrationProcess</title>
+    <title>BuyMe</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -32,8 +33,7 @@
         // Create query for login validation
         rs = st.executeQuery("SELECT * FROM account WHERE username='" + username + "';");
         if (rs.next()) {
-        	out.println("Username Taken");
-            out.println("<a href='register.jsp'>Please use a different Username</a>");
+            out.println("<div class=\"container signin\"><p>Username Taken <br><a href=\"register.jsp\">Try Again</a>.</p> </div>");
         } else {
         	// Build the SQL query with placeholders for parameters
             String query = "INSERT INTO account (first_name, last_name, username, password, email, access_level) VALUES (?, ?, ?, ?, ?, ?);";
@@ -50,10 +50,9 @@
             int result = 0;
             result = ps.executeUpdate();
             if (result < 1) {
-                out.println("Error: Registration failed.");
+                out.println("<div class=\"container signin\"><p>There was a problem registering your account <br><a href=\"register.jsp\">Try Again</a>.</p> </div>");
             } else {
-                out.println("Thank you for registering");
-                out.println("<a href='login.jsp'>Please Login</a>");
+                out.println("<div class=\"container signin\"><p>Thank you for registering <br><a href=\"login.jsp\">Please Login</a>.</p> </div>");
             }
         }
     } catch (Exception e) {

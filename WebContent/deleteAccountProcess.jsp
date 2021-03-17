@@ -9,7 +9,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoginProcess</title>
+    <title>BuyMe</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -28,9 +29,12 @@
         // Generate and Execute Query
         st = conn.createStatement();
         int i = st.executeUpdate("DELETE FROM account WHERE username='" + username + "' AND password='" + password + "';");
-        out.println("Account deleted successfully");
-        session.invalidate();
-        out.println("<a href='index.jsp'>Go to Homepage</a>");
+        if (i < 1) {
+            out.println("<div class=\"container signin\"><p>Account was not deleted: Invalid credentials <br> <a href=\"deleteAccount.jsp\">Try Again</a>.</p></div>");
+        } else {
+            session.invalidate();
+            out.println("<div class=\"container signin\"><p>Account deleted successfully <br> <a href=\"deleteAccount.jsp\">Go to Homepage</a>.</p></div>");
+        }
     } catch (Exception e) {
         out.print("<p>Error connecting to MYSQL server.</p>");
         e.printStackTrace();

@@ -9,7 +9,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LoginProcess</title>
+    <title>BuyMe</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -24,14 +25,14 @@
         String username = request.getParameter("username");
         String password = request.getParameter("psw");
         st = conn.createStatement();
-        
+
         // Create query for login validation
         rs = st.executeQuery("SELECT * FROM account WHERE username='" + username + "' AND password='" + password + "';");
         if (rs.next()) {
             session.setAttribute("user", username);
             response.sendRedirect("success.jsp");
         } else {
-        	out.println("Invalid credentials <a href='login.jsp'>Try Again</a>");
+        	out.println("<div class=\"container signin\"><p>Invalid Credentials <br><a href=\"login.jsp\">Try Again</a>.</p> </div>");
         }
     } catch (Exception e) {
         out.print("<p>Error connecting to MYSQL server.</p>");
