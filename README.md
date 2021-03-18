@@ -5,6 +5,8 @@
 ```
 📦BuyMe
  ┣ 📂.idea // Don't Need this for Eclipse
+ ┣ 📂sql
+ ┃ ┗ 📜loginTest.sql
  ┣ 📂src
  ┃ ┗ 📂database
  ┃ ┃ ┣ 📜Database.java
