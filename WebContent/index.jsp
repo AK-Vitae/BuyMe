@@ -12,7 +12,7 @@
 
 <body>
 <%@ include file="navigationBar.jsp" %>
-<div>
+<div class="marginLeft">
     <h1> BuyMe</h1>
     <hr>
     <a href="login.jsp">Login into your account</a>

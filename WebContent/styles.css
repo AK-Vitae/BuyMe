@@ -53,6 +53,10 @@ hr {
   opacity:1;
 }
 
+.marginLeft {
+  margin-left: 30px;
+}
+
 /* Add a blue text color to links */
 a {
   color: dodgerblue;

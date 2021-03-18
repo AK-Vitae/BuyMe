@@ -14,14 +14,19 @@
     <body>
     <%@ include file = "navigationBar.jsp" %>
       <% if ((session.getAttribute("user")==null)) { %>
-        You are not logged in<br />
+    <div class="marginLeft">
+        <p>You are not logged in</p>
+        <br/>
         <a href="login.jsp">Please Login</a>
+    </div>
         <%} else { %>
-        	<h1>Welcome <%=session.getAttribute("user")%></h1>
-        	<hr>
-            <a href='logout.jsp'>Log Out</a>
-            <br>
-            <a href='deleteAccount.jsp'>Delete Account</a>
+            <div class="marginLeft">
+        	    <h1>Welcome <%=session.getAttribute("user")%></h1>
+        	    <hr>
+                <a href='logout.jsp'>Log Out</a>
+                <br>
+                <a href='deleteAccount.jsp'>Delete Account</a>
+            </div>
             <% } %>
     </body>
 

@@ -30,7 +30,7 @@
         rs = st.executeQuery("SELECT * FROM account WHERE username='" + username + "' AND password='" + password + "';");
         if (rs.next()) {
             session.setAttribute("user", username);
-            response.sendRedirect("success.jsp");
+            response.sendRedirect("profile.jsp");
         } else {
         	out.println("<div class=\"container signin\"><p>Invalid Credentials <br><a href=\"login.jsp\">Try Again</a>.</p> </div>");
         }
