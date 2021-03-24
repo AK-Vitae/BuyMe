@@ -12,6 +12,7 @@
 
 <body>
 <%@ include file="navigationBar.jsp" %>
+<% if ((session.getAttribute("user") == null)) { %>
 <div class="marginLeft">
     <h1> BuyMe</h1>
     <hr>
@@ -19,6 +20,14 @@
     <br>
     <a href="register.jsp">Create your BuyMe account</a>
 </div>
+<%} else { %>
+<div class="marginLeft">
+    <h1> BuyMe Homepage</h1>
+    <hr>
+</div>
+<% } %>
+</body>
+
 </body>
 
 </html>
