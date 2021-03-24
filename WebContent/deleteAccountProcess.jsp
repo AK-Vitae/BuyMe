@@ -29,7 +29,7 @@
         // Generate and Execute Query
         st = conn.createStatement();
 
-        if(username == session.getAttribute("user").toString()) {
+        if(username.equals(session.getAttribute("user").toString())) {
             int i = st.executeUpdate("DELETE FROM account WHERE username='" + username + "' AND password='" + password + "';");
             if (i < 1) {
                 out.println("<div class=\"container signin\"><p>Account was not deleted: Invalid credentials <br> <a href=\"deleteAccount.jsp\">Try Again</a>.</p></div>");
