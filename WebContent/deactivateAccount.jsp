@@ -26,25 +26,25 @@
 	<%@ include file = "navigationBar.jsp" %>
 		<% if(session.getAttribute("user")==null) { response.sendRedirect("index.jsp"); } else { %>
 			<div class="container">
-				<form action="deleteAccountProcess.jsp" method="POST">
-					<h1>Delete Your Account</h1>
+				<form action="deactivateAccountProcess.jsp" method="POST">
+					<h1>Deactivate Your Account</h1>
 					<hr>
 
-					<label for="userNameDelete"><b>Username</b></label>
-					<input type="text" placeholder="Enter Username" name="userNameDelete" id="username" required>
+					<label for="userNameDeactivate"><b>Username</b></label>
+					<input type="text" placeholder="Enter Username" name="userNameDeactivate" id="userNameDeactivate" required>
 
-					<label for="pswDelete"><b>Password</b></label>
-					<input type="password" placeholder="Enter Password" name="pswDelete" id="pswDelete" onkeyup='check();'
+					<label for="pswDeactivate"><b>Password</b></label>
+					<input type="password" placeholder="Enter Password" name="pswDeactivate" id="pswDeactivate" onkeyup='check();'
 						required>
 
-					<label for="pswDeleteConfirmation"><b>Confirm Password</b></label>
-					<input type="password" placeholder="Confirm Password" name="pswDeleteConfirmation" id="pswDeleteConfirmation"
+					<label for="pswDeactivateConfirmation"><b>Confirm Password</b></label>
+					<input type="password" placeholder="Confirm Password" name="pswDeactivateConfirmation" id="pswDeactivateConfirmation"
 						onkeyup='check();' required>
 					<br>
 					<span id='message'></span>
 					<hr>
 
-					<button type="submit" class="deletebtn">Delete Account</button>
+					<button type="submit" class="deactivatebtn">Deactivate Account</button>
 				</form>
 
 			</div>

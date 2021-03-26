@@ -25,7 +25,7 @@
         	    <hr>
                 <a href='logout.jsp'>Log Out</a>
                 <br>
-                <a href='deleteAccount.jsp'>Delete Account</a>
+                <a href='deactivateAccount.jsp'>Deactivate Account</a>
             </div>
             <% } %>
     </body>
