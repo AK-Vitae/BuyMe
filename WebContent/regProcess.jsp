@@ -16,7 +16,7 @@
 <%
 	Database db = new Database();
 	Connection conn = null;
-	Statement st = null;
+	Statement st;
 	ResultSet rs = null;
     PreparedStatement ps = null;
     try {
@@ -36,7 +36,7 @@
             out.println("<div class=\"container signin\"><p>Username Taken <br><a href=\"register.jsp\">Try Again</a>.</p> </div>");
         } else {
         	// Build the SQL query with placeholders for parameters
-            String query = "INSERT INTO account (first_name, last_name, username, password, email, access_level) VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO account (first_name, last_name, username, password, email, access_level, is_active) VALUES (?, ?, ?, ?, ?, ?, ?);";
             ps = conn.prepareStatement(query);
 
             // Add parameters to query
@@ -46,8 +46,9 @@
             ps.setString(4, password);
             ps.setString(5, email);
             ps.setInt(6, accessLevel);
+            ps.setBoolean(7, true); // isActive = true
 
-            int result = 0;
+            int result;
             result = ps.executeUpdate();
             if (result < 1) {
                 out.println("<div class=\"container signin\"><p>There was a problem registering your account <br><a href=\"register.jsp\">Try Again</a>.</p> </div>");
