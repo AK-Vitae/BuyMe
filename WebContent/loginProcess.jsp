@@ -1,5 +1,5 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@page import="database.Database"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@page import="database.Database" %>
 <%@ page import="java.sql.*" %>
 
 <!DOCTYPE html>
@@ -10,18 +10,18 @@
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BuyMe</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
 <%
-	Database db = new Database();
-	Connection conn = null;
-	Statement st = null;
-	ResultSet rs = null;
+    Database db = new Database();
+    Connection conn = null;
+    Statement st = null;
+    ResultSet rs = null;
     try {
-    	// Open DB Connection and get parameters
-    	conn = db.getConnection();
+        // Open DB Connection and get parameters
+        conn = db.getConnection();
         String username = request.getParameter("username");
         String password = request.getParameter("psw");
         st = conn.createStatement();
@@ -37,16 +37,30 @@
                 response.sendRedirect("profile.jsp");
             }
         } else {
-        	out.println("<div class=\"container signin\"><p>Invalid Credentials <br><a href=\"login.jsp\">Try Again</a>.</p> </div>");
+            out.println("<div class=\"container signin\"><p>Invalid Credentials <br><a href=\"login.jsp\">Try Again</a>.</p> </div>");
         }
-    } catch (Exception e) {
+    } catch (SQLException se) {
         out.print("<p>Error connecting to MYSQL server.</p>");
+        se.printStackTrace();
+    } catch (Exception e) {
         e.printStackTrace();
     } finally {
-    	// Close
-        try { if (rs != null) rs.close(); } catch (Exception e) {};
-        try { if (st != null) st.close(); } catch (Exception e) {};
-        try { if (conn != null) db.closeConnection(conn); } catch (Exception e) {};
+        // Close
+        try {
+            if (rs != null) rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (st != null) st.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (conn != null) db.closeConnection(conn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 %>
 </body>

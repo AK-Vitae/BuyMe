@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BuyMe</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 
 <body>
@@ -22,7 +21,7 @@
 <%} else { %>
 <form action="questionProcess.jsp" method="POST">
     <div class="container">
-        <h1>Q&A</h1>
+        <h1>Ask a Question</h1>
         <hr>
 
         <label for="topic"><b>Topic</b></label>
@@ -31,9 +30,13 @@
         <label for="question"><b>Question</b></label>
         <br>
         <textarea placeholder="Enter your question" name="question" id="question" required></textarea>
-        <hr>
+        <br>
 
         <button type="submit" class="loginbtn">Ask Question</button>
+
+        <div class="signin">
+            <p><a href="questionsAndAnswers.jsp">Go back to questions list</a>.</p>
+        </div>
     </div>
 </form>
 <% } %>
