@@ -22,9 +22,9 @@
         <li class="nav-item">
           <a class="nav-link" href="profile.jsp">My Profile</a>
         </li>
-<%--        <li class="nav-item">--%>
-<%--          <a class="nav-link" href="index.jsp">Home</a>--%>
-<%--        </li>--%>
+        <li class="nav-item">
+          <a class="nav-link" href="questionAndAnswer.jsp">Q&A</a>
+        </li>
 <%--        <li class="nav-item">--%>
 <%--          <a class="nav-link" href="index.jsp">Home</a>--%>
 <%--        </li>--%>

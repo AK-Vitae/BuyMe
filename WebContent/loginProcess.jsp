@@ -30,7 +30,12 @@
         rs = st.executeQuery("SELECT * FROM account WHERE username='" + username + "' AND password='" + password + "';");
         if (rs.next()) {
             session.setAttribute("user", username);
-            response.sendRedirect("profile.jsp");
+            if (!rs.getBoolean("is_active")) {
+                int i = st.executeUpdate("UPDATE account SET is_active = true WHERE username='" + username + "' AND password='" + password + "';");
+                out.println("<div class=\"container signin\"><p>Account Reactivated <br><a href=\"profile.jsp\">Go to Profile</a>.</p> </div>");
+            } else {
+                response.sendRedirect("profile.jsp");
+            }
         } else {
         	out.println("<div class=\"container signin\"><p>Invalid Credentials <br><a href=\"login.jsp\">Try Again</a>.</p> </div>");
         }
