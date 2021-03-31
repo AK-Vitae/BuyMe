@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
-<%@page import="database.Database" %>
+<%@page import="util.Account" %>
 <%@page import="util.QuestionAnswer" %>
-<%@ page import="java.sql.*" %>
 <%@ page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
@@ -26,6 +25,8 @@
 <%} else { %>
 <div class="marginLeft">
     <%
+
+        Account userAccount = (Account) session.getAttribute("userAccount");
         int questionId = 0;
         String topic = null, question = null, askedBy = null, askDate = null, answer = null, answeredBy = null, answerDate = null;
 
@@ -48,19 +49,24 @@
 </div>
 <form action="answerProcess.jsp?qid=<%out.println(questionId);%>" method="POST">
     <div class="container">
-        <label for="question"><b>Question Asked</b></label>
+        <h2>Topic: <%out.println(topic);%></h2>
+        <h3>Question Asked By: <%out.println(askedBy);%></h3>
+        <hr>
+        <label for="question"><b>Question</b></label>
         <br>
         <textarea name="question" id="question" readonly> <%out.println(question);%></textarea>
         <br>
         <label for="answer"><b>Answer</b></label>
         <br>
-        <% if (answer == null) { %>
-        <textarea placeholder="Answer the question" name="answer" id="answer" required></textarea>
+        <%
+            if ( userAccount.getAccessLevel() < 3) {
+        %>
+        <textarea name="answer" id="answer" required><%if (answer!=null) { out.print(answer); } else { out.print(""); }%></textarea>
         <br>
 
-        <button type="submit" class="loginbtn">Answer Question</button>
+        <button type="submit" class="loginbtn">Answer Question/Update Answer</button>
         <%} else { %>
-        <textarea name="answer" id="answer" readonly> <%out.println(answer);%></textarea>
+        <textarea name="answer" id="answer" readonly> <%if (answer!=null) { out.print(answer); } else { out.print(""); }%></textarea>
         <br>
         <% } %>
 

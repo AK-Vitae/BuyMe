@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@page import="database.Database" %>
+<%@page import="util.Account" %>
 <%@ page import="java.sql.*" %>
 
 <!DOCTYPE html>
@@ -29,6 +30,22 @@
         // Create query for login validation
         rs = st.executeQuery("SELECT * FROM account WHERE username='" + username + "' AND password='" + password + "';");
         if (rs.next()) {
+            Account userAccount = new Account();
+            int accountNumber = rs.getInt("account_number");
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
+            String email = rs.getString("email");
+            int accessLevel = rs.getInt("access_level");
+
+            userAccount.setAccountNumber(accountNumber);
+            userAccount.setFirstName(firstName);
+            userAccount.setLastName(lastName);
+            userAccount.setUsername(username);
+            userAccount.setPassword(password);
+            userAccount.setEmail(email);
+            userAccount.setAccessLevel(accessLevel);
+
+            session.setAttribute("userAccount", userAccount);
             session.setAttribute("user", username);
             if (!rs.getBoolean("is_active")) {
                 int i = st.executeUpdate("UPDATE account SET is_active = true WHERE username='" + username + "' AND password='" + password + "';");

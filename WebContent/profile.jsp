@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@page import="util.Account" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,11 +20,17 @@
     <a href="login.jsp">Please Login</a>
 </div>
 <%} else { %>
+<%
+    Account userAccount = (Account) session.getAttribute("userAccount");
+%>
+
 <div class="marginLeft">
-    <h1>Welcome <%=session.getAttribute("user")%>
-    </h1>
+    <h1>Welcome <%out.println(userAccount.getFirstName());%></h1>
+    <h2>Access Level: <%out.println(userAccount.getAccessLevel());%></h2>
     <hr>
     <a href='logout.jsp'>Log Out</a>
+    <br>
+    <a href='editAccountInformation.jsp'>Edit Account Information</a>
     <br>
     <a href='deactivateAccount.jsp'>Deactivate Account</a>
 </div>
