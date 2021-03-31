@@ -8,27 +8,37 @@
  ┣ 📂sql
  ┃ ┗ 📜loginTest.sql
  ┣ 📂src
- ┃ ┗ 📂database
+ ┃ ┣ 📂database
  ┃ ┃ ┣ 📜Database.java
- ┃ ┃ ┗ 📜db.properties // Add your own file
+ ┃ ┃ ┗ 📜db.properties
+ ┃ ┗ 📂util
+ ┃ ┃ ┗ 📜QuestionAnswer.java
  ┣ 📂WebContent
+ ┃ ┣ 📂css
+ ┃ ┃ ┗ 📜main.css
+ ┃ ┣ 📂js
+ ┃ ┃ ┗ 📜main.js
  ┃ ┣ 📂META-INF
  ┃ ┃ ┗ 📜MANIFEST.MF
  ┃ ┣ 📂WEB-INF
  ┃ ┃ ┣ 📂lib
  ┃ ┃ ┃ ┗ 📜mysql-connector-java-8.0.23.jar // Add your own jar file
  ┃ ┃ ┗ 📜web.xml
- ┃ ┣ 📜deleteAccount.jsp
- ┃ ┣ 📜deleteAccountProcess.jsp
+ ┃ ┣ 📜answerProcess.jsp
+ ┃ ┣ 📜deactivateAccount.jsp
+ ┃ ┣ 📜deactivateAccountProcess.jsp
  ┃ ┣ 📜index.jsp
  ┃ ┣ 📜login.jsp
  ┃ ┣ 📜loginProcess.jsp
  ┃ ┣ 📜logout.jsp
  ┃ ┣ 📜navigationBar.jsp
+ ┃ ┣ 📜profile.jsp
+ ┃ ┣ 📜question.jsp
+ ┃ ┣ 📜questionDetails.jsp
+ ┃ ┣ 📜questionProcess.jsp
+ ┃ ┣ 📜questionsAndAnswers.jsp
  ┃ ┣ 📜register.jsp
- ┃ ┣ 📜regProcess.jsp
- ┃ ┣ 📜styles.css
- ┃ ┗ 📜success.jsp
+ ┃ ┗ 📜regProcess.jsp
  ┣ 📜.classpath
  ┣ 📜.gitignore
  ┣ 📜.project
