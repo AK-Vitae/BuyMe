@@ -23,13 +23,14 @@
         <label for="userNameDeactivate"><b>Username</b></label>
         <input type="text" placeholder="Enter Username" name="userNameDeactivate" id="userNameDeactivate" required>
 
-        <label for="pswDeactivate"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="pswDeactivate" id="pswDeactivate" onkeyup='check();'
+        <label for="psw"><b>Password</b></label>
+        <input type="checkbox" onclick="showPasswordWithConfirmation()">Show Passwords
+        <input type="password" placeholder="Enter Password" name="psw" id="psw" onkeyup='passwordCheck();'
                required>
 
-        <label for="pswDeactivateConfirmation"><b>Confirm Password</b></label>
-        <input type="password" placeholder="Confirm Password" name="pswDeactivateConfirmation"
-               id="pswDeactivateConfirmation"
+        <label for="pswConfirmation"><b>Confirm Password</b></label>
+        <input type="password" placeholder="Confirm Password" name="pswConfirmation"
+               id="pswConfirmation"
                onkeyup='passwordCheck();' required>
         <br>
         <span id='message'></span>

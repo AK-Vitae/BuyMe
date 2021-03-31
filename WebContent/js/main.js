@@ -16,12 +16,33 @@ function search() {
 }
 
 function passwordCheck () {
-    if (document.getElementById('pswDelete').value ===
-        document.getElementById('pswDeleteConfirmation').value) {
+    if (document.getElementById('psw').value ===
+        document.getElementById('pswConfirmation').value) {
         document.getElementById('message').style.color = 'green';
         document.getElementById('message').innerHTML = 'Passwords Match';
     } else {
         document.getElementById('message').style.color = 'red';
         document.getElementById('message').innerHTML = "Passwords Don't Match!";
+    }
+}
+
+function showPassword() {
+    const x = document.getElementById("psw");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
+
+function showPasswordWithConfirmation() {
+    const x = document.getElementById("psw");
+    const y = document.getElementById("pswConfirmation");
+    if (x.type === "password") {
+        x.type = "text";
+        y.type = "text";
+    } else {
+        x.type = "password";
+        y.type = "password";
     }
 }
