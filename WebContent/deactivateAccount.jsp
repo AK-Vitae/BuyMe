@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page import="util.Account" %>
 <!DOCTYPE html>
 <html>
 
@@ -17,6 +18,25 @@
 } else { %>
 <div class="container">
     <form action="deactivateAccountProcess.jsp" method="POST">
+    <%
+        if (request.getParameter("profile") != null) {
+            Account userAccount = (Account) session.getAttribute("recentlyViewedAccount");
+
+    %>
+        <h1>Deactivate This Account</h1>
+        <hr>
+
+        <label for="userNameDeactivate"><b>Username</b></label>
+        <input type="text" value="<%out.print(userAccount.getUsername());%>" name="userNameDeactivate" id="userNameDeactivate" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="checkbox" onclick="showPassword()">Show Password
+        <input type="password" value="<%out.print(userAccount.getPassword());%>" name="psw" id="psw" required>
+
+        <br>
+
+        <button type="submit" class="deactivatebtn">Deactivate User Account</button>
+    <%} else {%>
         <h1>Deactivate Your Account</h1>
         <hr>
 
@@ -37,8 +57,8 @@
         <br>
 
         <button type="submit" class="deactivatebtn">Deactivate Account</button>
+    <%}%>
     </form>
-
 </div>
 <% } %>
 </body>

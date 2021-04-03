@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@page import="database.Database" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="util.Account" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,21 +25,39 @@
         //Get parameters
         conn = db.getConnection();
         String username = request.getParameter("userNameDeactivate");
-        String password = request.getParameter("pswDeactivate");
+        String password = request.getParameter("psw");
 
         // Generate and Execute Query
         st = conn.createStatement();
 
-        if (username.equals(session.getAttribute("user").toString())) {
+        Account userAccount = (Account) session.getAttribute("userAccount");
+        if (userAccount.getAccessLevel() < 3 && username.equals(userAccount.getUsername())) {
             int i = st.executeUpdate("UPDATE account SET is_active = false WHERE username='" + username + "' AND password='" + password + "';");
             if (i < 1) {
-                out.println("<div class=\"container signin\"><p>Account was not deactivated: Invalid credentials <br> <a href=\"deactivateAccount.jsp\">Try Again</a>.</p></div>");
+                out.println("<div class=\"container signin\"><p>Account was not deactivated: User's Credentials are Incorrect <br> <a href=\"profile.jsp\">Go to your profile</a>.</p></div>");
             } else {
                 session.invalidate();
                 out.println("<div class=\"container signin\"><p>Account deactivated successfully <br> <a href=\"index.jsp\">Go to Homepage</a>.</p></div>");
             }
+        } else if (userAccount.getAccessLevel() < 3) {
+            int i = st.executeUpdate("UPDATE account SET is_active = false WHERE username='" + username + "' AND password='" + password + "';");
+            if (i < 1) {
+                out.println("<div class=\"container signin\"><p>Account was not deactivated: User's Credentials are Incorrect <br> <a href=\"profile.jsp\">Go to your profile</a>.</p></div>");
+            } else {
+                out.println("<div class=\"container signin\"><p>Account deactivated successfully <br> <a href=\"index.jsp\">Go to Homepage</a>.</p></div>");
+            }
         } else {
-            out.println("<div class=\"container signin\"><p>Account was not deactivated: Invalid credentials <br> <a href=\"deactivateAccount.jsp\">Try Again</a>.</p></div>");
+            if (username.equals(session.getAttribute("user").toString())) {
+                int i = st.executeUpdate("UPDATE account SET is_active = false WHERE username='" + username + "' AND password='" + password + "';");
+                if (i < 1) {
+                    out.println("<div class=\"container signin\"><p>Account was not deactivated: Invalid credentials <br> <a href=\"profile.jsp\">Go to your profile</a>.</p></div>");
+                } else {
+                    session.invalidate();
+                    out.println("<div class=\"container signin\"><p>Account deactivated successfully <br> <a href=\"index.jsp\">Go to Homepage</a>.</p></div>");
+                }
+            } else {
+                out.println("<div class=\"container signin\"><p>Account was not deactivated: Invalid credentials <br> <a href=\"profile.jsp\">Go to your profile</a>.</p></div>");
+            }
         }
     } catch (SQLException se) {
         out.print("<p>Error connecting to MYSQL server.</p>");
