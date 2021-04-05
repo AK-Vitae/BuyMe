@@ -25,6 +25,11 @@
                 <a class="nav-link" href="questionsAndAnswers.jsp">Q&A</a>
             </li>
         </ul>
+        <% if ((session.getAttribute("user") != null)) { %>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a class="nav-link" href="logout.jsp">Logout</a></li>
+        </ul>
+        <%}%>
     </div>
 </nav>
 </body>

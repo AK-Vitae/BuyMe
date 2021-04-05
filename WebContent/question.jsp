@@ -13,7 +13,7 @@
 <body>
 <%@ include file="navigationBar.jsp" %>
 <% if ((session.getAttribute("user") == null)) { %>
-<div class="marginLeft">
+<div class="marginLeft-Right">
     <p>You are not logged in</p>
     <br/>
     <a href="login.jsp">Please Login</a>

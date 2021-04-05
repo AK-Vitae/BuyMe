@@ -14,7 +14,7 @@
 <body>
 <%@ include file="navigationBar.jsp" %>
 <% if ((session.getAttribute("user") == null)) { %>
-<div class="marginLeft">
+<div class="marginLeft-Right">
     <p>You are not logged in</p>
     <br/>
     <a href="login.jsp">Please Login</a>
@@ -24,15 +24,19 @@
     Account userAccount = (Account) session.getAttribute("userAccount");
 %>
 
-<div class="marginLeft">
+<div class="marginLeft-Right">
     <h1>Welcome <%out.println(userAccount.getFirstName());%></h1>
     <h2>Access Level: <%out.println(userAccount.getAccessLevel());%></h2>
     <hr>
-    <a href='logout.jsp'>Log Out</a>
-    <br>
     <a href='editAccountInformation.jsp'>Edit Account Information</a>
     <br>
     <a href='deactivateAccount.jsp'>Deactivate Account</a>
+    <%if (userAccount.getAccessLevel() == 1) {%>
+    <br>
+    <a href='createCustomerRepAccount.jsp'>Create a Customer Representative Account</a>
+    <br>
+    <a href='#'>Generate Sales Report</a>
+    <%} %>
 </div>
 <% } %>
 </body>

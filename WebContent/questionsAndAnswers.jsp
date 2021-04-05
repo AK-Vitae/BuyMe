@@ -50,10 +50,10 @@
                         int questionId = rs.getInt("question_id");
                         String topic = rs.getString("topic");
                         String question = rs.getString("question");
-                        String askedBy = rs.getString("asked_by");
+                        int askedBy = rs.getInt("asked_by");
                         String askDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a").format(rs.getTimestamp("ask_date"));
                         String answer = rs.getString("answer");
-                        String answeredBy = rs.getString("answered_by");
+                        int answeredBy = rs.getInt("answered_by");
 
 
                         qA.setQuestionId(questionId);

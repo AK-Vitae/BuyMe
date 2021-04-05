@@ -17,18 +17,19 @@
 <body>
 <%@ include file="navigationBar.jsp" %>
 <% if ((session.getAttribute("user") == null)) { %>
-<div class="marginLeft">
+<div class="marginLeft-Right">
     <p>You are not logged in</p>
     <br/>
     <a href="login.jsp">Please Login</a>
 </div>
 <%} else { %>
-<div class="marginLeft">
+<div class="marginLeft-Right">
     <%
 
         Account userAccount = (Account) session.getAttribute("userAccount");
         int questionId = 0;
-        String topic = null, question = null, askedBy = null, askDate = null, answer = null, answeredBy = null, answerDate = null;
+        int askedBy = 0, answeredBy;
+        String topic = null, question = null, askDate = null, answer = null, answerDate = null;
 
         ArrayList<QuestionAnswer> qAList = (ArrayList<QuestionAnswer>) session.getAttribute("questionAnswers");
         for (QuestionAnswer qA : qAList) {
@@ -45,12 +46,13 @@
             }
         }
         out.print("<hr>");
+        Account userProfile = new Account(askedBy);
     %>
 </div>
 <form action="answerProcess.jsp?qid=<%out.println(questionId);%>" method="POST">
     <div class="container">
         <h2>Topic: <%out.println(topic);%></h2>
-        <h3>Question Asked By: <%out.println(askedBy);%></h3>
+        <h3>Question Asked By: <a href="userProfile.jsp?userProfile=<%out.println(userProfile.getUsername());%>"><%out.println(userProfile.getUsername());%></a></h3>
         <hr>
         <label for="question"><b>Question</b></label>
         <br>

@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@page import="util.Account" %>
 <%@page import="database.Database" %>
 <%@ page import="java.sql.*" %>
 
@@ -22,7 +23,8 @@
     try {
         // Open DB Connection and get parameters
         conn = db.getConnection();
-        String askedBy = session.getAttribute("user").toString();
+        Account userAccount = (Account) session.getAttribute("userAccount");
+        int askedBy = userAccount.getAccountNumber();
         String topic = request.getParameter("topic");
         String question = request.getParameter("question");
 
@@ -31,7 +33,7 @@
         ps = conn.prepareStatement(query);
 
         // Add parameters to query
-        ps.setString(1, askedBy);
+        ps.setInt(1, askedBy);
         ps.setString(2, topic);
         ps.setString(3, question);
 
