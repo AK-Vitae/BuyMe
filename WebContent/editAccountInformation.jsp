@@ -15,41 +15,46 @@
 <body>
 <%@ include file="navigationBar.jsp" %>
 <% if ((session.getAttribute("user") == null)) { %>
-<div class="marginLeft">
+<div class="marginLeft-Right">
     <p>You are not logged in</p>
     <br/>
     <a href="login.jsp">Please Login</a>
 </div>
 <%} else { %>
-<form action="accountProcess.jsp?process=edit" method="POST">
-    <div class="container">
-        <h1>Edit Account Information</h1>
-        <hr>
-        <%
-            Account userAccount = (Account) session.getAttribute("userAccount");
-        %>
+<%Account userAccount;%>
+<%if (request.getParameter("profile") != null) { userAccount = (Account) session.getAttribute("recentlyViewedAccount");%>
+<form action="accountProcess.jsp?process=editUserProfile" method="POST">
+        <%} else { userAccount = (Account) session.getAttribute("userAccount");%>
+    <form action="accountProcess.jsp?process=edit" method="POST">
+        <% } %>
+        <div class="container">
+            <h1>Edit Account Information</h1>
+            <hr>
 
-        <label for="firstName"><b>First Name</b></label>
-        <input type="text" value="<%out.println(userAccount.getFirstName());%>" name="firstName" id="firstName" required>
+            <label for="firstName"><b>First Name</b></label>
+            <input type="text" value="<%out.println(userAccount.getFirstName());%>" name="firstName" id="firstName"
+                   required>
 
-        <label for="lastName"><b>Last Name</b></label>
-        <input type="text" value="<%out.println(userAccount.getLastName());%>" name="lastName" id="lastName" required>
+            <label for="lastName"><b>Last Name</b></label>
+            <input type="text" value="<%out.println(userAccount.getLastName());%>" name="lastName" id="lastName"
+                   required>
 
-        <label for="username"><b>Username</b></label>
-        <input type="text" value="<%out.println(userAccount.getUsername());%>" name="username" id="username" required>
+            <label for="username"><b>Username</b></label>
+            <input type="text" value="<%out.println(userAccount.getUsername());%>" name="username" id="username"
+                   required>
 
-        <label for="psw"><b>Password</b></label>
-        <input type="checkbox" onclick="showPassword()">Show Password
-        <input type="password" value="<%out.println(userAccount.getPassword());%>" name="psw" id="psw" required>
+            <label for="psw"><b>Password</b></label>
+            <input type="checkbox" onclick="showPassword()">Show Password
+            <input type="password" value="<%out.println(userAccount.getPassword());%>" name="psw" id="psw" required>
 
-        <label for="email"><b>Email</b></label>
-        <input type="text" value="<%out.println(userAccount.getEmail());%>" name="email" id="email" required>
-        <br>
+            <label for="email"><b>Email</b></label>
+            <input type="text" value="<%out.println(userAccount.getEmail());%>" name="email" id="email" required>
+            <br>
 
-        <button type="submit" class="registerbtn">Update Account Information</button>
-    </div>
-</form>
-<% } %>
+            <button type="submit" class="registerbtn">Update Account Information</button>
+        </div>
+    </form>
+        <% } %>
 </body>
 
 </html>
