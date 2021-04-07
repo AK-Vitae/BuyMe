@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@page import="util.Account" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +14,16 @@
 
 <body>
 <%@ include file="navigationBar.jsp" %>
+<%
+    Account userAccount = (Account) session.getAttribute("userAccount");
+%>
+<% if (userAccount.getAccessLevel() != 1) { %>
+<div class="marginLeft-Right">
+    <p>You do not have the appropriate access level</p>
+    <br/>
+    <a href="profile.jsp">Please Go Back</a>
+</div>
+<%} else { %>
 <form action="accountProcess.jsp?process=createCustomerRep" method="POST">
     <div class="container">
         <h1>Create Customer a Representative Account</h1>
@@ -45,7 +56,7 @@
         <button type="submit" class="registerbtn">Create</button>
     </div>
 </form>
-
+<% } %>
 </body>
 
 </html>
