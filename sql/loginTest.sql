@@ -21,7 +21,7 @@ CREATE TABLE `account`
 
 LOCK TABLES account WRITE;
 INSERT INTO account (first_name, last_name, username, password, email, access_level, is_active) VALUES
-('Ad','Min','admin','admin','admin@buyme.com',1, true),
+('admin','admin','admin','admin','admin@buyme.com',1, true),
 ('John','Smith','jsmith','1234','jsmith@buyme.com',2, true),
 ('Jane','Doe','jdoe','4321','jdoe@buyme.com',2, true),
 ('Joe','Shmoe','jshmoe','password','jshmoe@buyme.com',2, true);
@@ -37,12 +37,17 @@ DROP TABLE IF EXISTS `question`;
 
 CREATE TABLE `question`
 (
-    `question_number` INT NOT NULL auto_increment,
-    `username`        VARCHAR(50) DEFAULT NULL,
+    `question_id`     INT NOT NULL auto_increment,
     `topic`           VARCHAR(50) DEFAULT NULL,
     `question`        VARCHAR(200) DEFAULT NULL,
+    `asked_by`        INT DEFAULT NULL,
+    `ask_date`        DATETIME DEFAULT NULL,
     `answer`          VARCHAR(200) DEFAULT NULL,
-    PRIMARY KEY (`question_number`)
+    `answered_by`     INT DEFAULT NULL,
+    `answer_date`     DATETIME DEFAULT NULL,
+    PRIMARY KEY (`question_id`),
+    FOREIGN KEY(`asked_by`) REFERENCES account(`account_number`),
+    FOREIGN KEY(`answered_by`) REFERENCES account(`account_number`)
 );
 
 SELECT * FROM `question`;

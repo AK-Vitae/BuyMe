@@ -13,7 +13,7 @@
 
 <body>
 <%@ include file="navigationBar.jsp" %>
-<% if ((session.getAttribute("user") == null)) { %>
+<% if ((session.getAttribute("userAccount") == null)) { %>
 <div class="marginLeft-Right">
     <p>You are not logged in</p>
     <br/>
@@ -35,7 +35,7 @@
     <br>
     <a href='createCustomerRepAccount.jsp'>Create a Customer Representative Account</a>
     <br>
-    <a href='#'>Generate Sales Report</a>
+    <a href='salesReport.jsp'>Generate Sales Report</a>
     <%} %>
 </div>
 <% } %>
