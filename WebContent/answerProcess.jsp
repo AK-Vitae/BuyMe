@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@page import="database.Database" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="util.Account" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +23,8 @@
     try {
         // Open DB Connection and get parameters
         conn = db.getConnection();
-        String answeredBy = session.getAttribute("user").toString();
+        Account userAccount = (Account) session.getAttribute("userAccount");
+        int answeredBy = userAccount.getAccountNumber();
         String answer = request.getParameter("answer");
         int questionId = Integer.parseInt(request.getParameter("qid"));
 
@@ -32,7 +34,7 @@
 
         // Add parameters to query
         ps.setString(1, answer);
-        ps.setString(2, answeredBy);
+        ps.setInt(2, answeredBy);
         ps.setInt(3, questionId);
 
         int result;
