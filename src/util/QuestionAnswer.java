@@ -7,8 +7,11 @@ public class QuestionAnswer {
     String topic;
     String question;
     String answer;
-    String askedBy;
-    String answeredBy;
+    int askedBy;
+    int answeredBy;
+
+    public QuestionAnswer() {
+    }
 
     public String getDateAsked() {
         return dateAsked;
@@ -42,19 +45,19 @@ public class QuestionAnswer {
         this.answer = answer;
     }
 
-    public String getAskedBy() {
+    public int getAskedBy() {
         return askedBy;
     }
 
-    public void setAskedBy(String askedBy) {
+    public void setAskedBy(int askedBy) {
         this.askedBy = askedBy;
     }
 
-    public String getAnsweredBy() {
+    public int getAnsweredBy() {
         return answeredBy;
     }
 
-    public void setAnsweredBy(String answeredBy) {
+    public void setAnsweredBy(int answeredBy) {
         this.answeredBy = answeredBy;
     }
 
