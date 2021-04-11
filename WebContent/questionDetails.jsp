@@ -61,7 +61,7 @@
         <label for="answer"><b>Answer</b></label>
         <br>
         <%
-            if ( userAccount.getAccessLevel() < 3) {
+            if ( userAccount.getAccessLevel() == 2) {
         %>
         <textarea name="answer" id="answer" required><%if (answer!=null) { out.print(answer); } else { out.print(""); }%></textarea>
         <br>

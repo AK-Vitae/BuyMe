@@ -24,7 +24,7 @@
 </div>
 <%} else { %>
 <div class="marginLeft-Right">
-    <h1>Generate Sales Reports</h1>
+    <h1>Generate Sales Reports For:</h1>
     <hr>
     <a href='salesReportProcess.jsp?for=total'>Total Earnings</a>
     <br>

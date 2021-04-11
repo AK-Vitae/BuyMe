@@ -25,13 +25,11 @@
 <div class="marginLeft-Right">
     <h1>Viewing <%out.print(request.getParameter("userProfile"));%>'s Profile</h1>
     <hr>
-
     <%
         Account userAccount = (Account) session.getAttribute("userAccount");
         Account recentlyViewedAccount = new Account(request.getParameter("userProfile"));
         session.setAttribute("recentlyViewedAccount", recentlyViewedAccount);
     %>
-
     <%if (recentlyViewedAccount.getIsActive() == 0) {%>
     <h1><%out.println(recentlyViewedAccount.getIsActive());%></h1>
     <h1><%out.println(request.getParameter("userProfile"));%></h1>
@@ -39,7 +37,9 @@
     <h1>This Account Has Been Deactivated</h1>
     <%} else { %>
 
-    <%if (userAccount.getAccessLevel() < 3) {%>
+    <a href='#'>Bidding History</a>
+    <br>
+    <%if (userAccount.getAccessLevel() == 2) {%>
     <a href='editAccountInformation.jsp?profile=userProfile'>Edit This Account's Information</a>
     <br>
     <a href='deactivateAccount.jsp?profile=userProfile'>Deactivate This User Account</a>

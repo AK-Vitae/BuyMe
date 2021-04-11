@@ -26,8 +26,10 @@
     <a href="login.jsp">Please Login</a>
     <%} else { %>
     <h2>Question and Answers</h2>
+    <a href="question.jsp">
+        <button class="loginbtn">Ask a New Question</button>
+    </a>
     <input type="text" id="myInput" onkeyup="search()" placeholder="Search for a question">
-
     <ul id="myUL">
         <%
             Database db = new Database();
@@ -100,11 +102,6 @@
             }
         %>
     </ul>
-
-    <a href="question.jsp">
-        <button class="loginbtn">Ask a New Question</button>
-    </a>
-
     <% } %>
 </div>
 

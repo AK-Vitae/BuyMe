@@ -22,6 +22,9 @@
                 <a class="nav-link" href="profile.jsp">My Profile</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="auctionList.jsp">Auctions</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="questionsAndAnswers.jsp">Q&A</a>
             </li>
         </ul>
