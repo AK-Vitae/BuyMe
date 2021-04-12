@@ -9,7 +9,7 @@
     padding: 20px;
 }
 
-/* Style inputs with type="text", select elements and textareas */
+/* Style inputs with type="text", select elements and textarea */
 input[type=text], input[type=password], select, textarea {
     width: 100%; /* Full width */
     padding: 12px; /* Some padding */
@@ -65,6 +65,33 @@ hr {
     background-color: #b80606;
 }
 
+.auction-btn-group button {
+    background-color: #4CAF50; /* Green background */
+    border: 1px solid green; /* Green border */
+    color: white; /* White text */
+    padding: 10px 24px; /* Some padding */
+    cursor: pointer; /* Pointer/hand icon */
+    float: left; /* Float the buttons side by side */
+    border-radius: 4px;
+    width: calc(100% / 3);
+}
+
+/* Clear floats (clearfix hack) */
+.auction-btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.auction-btn-group button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.auction-btn-group button:hover {
+    background-color: #3e8e41;
+}
+
 .marginLeft-Right {
     margin-left: 30px;
     margin-right: 30px;
@@ -81,12 +108,20 @@ a {
     text-align: center;
 }
 
+.font-green {
+    color: #45a049;
+}
+
+.font-red {
+    color: #b80606;
+}
+
 #myInput {
     background-position: 10px 12px; /* Position the search icon */
     background-repeat: no-repeat; /* Do not repeat the icon image */
     width: 100%; /* Full-width */
     font-size: 16px; /* Increase font-size */
-    padding: 12px 20px 12px 40px; /* Add some padding */
+    padding: 12px 20px 12px 5px; /* Add some padding */
     border: 1px solid #ddd; /* Add a grey border */
     margin-bottom: 12px; /* Add some space below the input */
 }
