@@ -164,3 +164,28 @@ from auctionItem aI inner join aircraft a
 select * from `car`;
 select * from `boat`;
 select * from `aircraft`;
+
+# Total Earnings
+-- SELECT SUM(soldPrice) AS `Total Earnings` FROM auctionItem;
+# Earnings Per Item
+-- SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(soldPrice) AS Earnings
+-- FROM auctionItem
+-- GROUP BY manufacturer, model;
+# Earnings Per Item Type
+-- SELECT type AS `Item Type`, SUM(soldPrice) AS `Earnings` FROM auctionItem GROUP BY type;
+# Earnings Per End-User
+-- SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.soldPrice) AS Earnings
+-- FROM account a INNER JOIN auctionItem aI
+-- ON a.account_number = aI.seller
+-- GROUP BY aI.seller;
+
+-- SELECT seller AS `End User`, SUM(soldPrice) AS Earnings FROM auctionItem GROUP BY seller;
+# Best-Selling Items
+-- SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(soldPrice) AS Earnings
+-- FROM auctionItem
+-- WHERE minSellPrice IS NOT NULL
+-- GROUP BY manufacturer, model
+-- ORDER BY Quantity DESC
+-- LIMIT 5;
+
+# Biggest Spenders -- Need Bidding History Table
