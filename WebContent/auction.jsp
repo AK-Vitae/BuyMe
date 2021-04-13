@@ -27,7 +27,7 @@
     String auctionType = request.getParameter("type");
     auctionType = auctionType.substring(0, 1).toUpperCase() + auctionType.substring(1);
 %>
-<form action="#" method="POST">
+<form action="auctionProcess.jsp?type=<%out.print(auctionType);%>" method="POST">
     <div class="container">
         <h1>Create a New <%out.print(auctionType);%> Auction</h1>
         <hr>
@@ -36,8 +36,8 @@
         <input type="text" placeholder="Enter the vehicle's identification number" name="productID" id="productID" required>
 
         <%if (auctionType.equalsIgnoreCase("car")) {%>
-        <label for="make"><b>Manufacturer</b></label>
-        <select name="make" id="make">
+        <label for="manufacturer"><b>Manufacturer</b></label>
+        <select name="manufacturer" id="manufacturer">
             <option value="" selected disabled hidden>Select a Manufacturer</option>
             <option value="AMC">AMC</option>
             <option value="Acura">Acura</option>
@@ -133,12 +133,12 @@
         </select>
         <br>
         <%} else if (auctionType.equalsIgnoreCase("boat")) {%>
-        <label for="make"><b>Manufacturer</b></label>
-        <input type="text" placeholder="Enter the manufacturer name" name="make" id="make" required>
+        <label for="manufacturer"><b>Manufacturer</b></label>
+        <input type="text" placeholder="Enter the manufacturer name" name="manufacturer" id="manufacturer" required>
 
         <%} else if (auctionType.equalsIgnoreCase("aircraft")) {%>
-        <label for="make"><b>Manufacturer</b></label>
-        <input type="text" placeholder="Enter the manufacturer name" name="make" id="make" required>
+        <label for="manufacturer"><b>Manufacturer</b></label>
+        <input type="text" placeholder="Enter the manufacturer name" name="manufacturer" id="manufacturer" required>
 
         <%}%>
 
@@ -162,6 +162,9 @@
 
         <label for="interiorColor"><b>Interior Color</b></label>
         <input type="text" placeholder="Enter the interior color of the vehicle" name="interiorColor" id="interiorColor">
+
+        <label for="capacity"><b>Capacity</b></label>
+        <input type="number" placeholder="Enter the vehicle's passenger capacity" name="capacity" id="capacity" min="1" step="1" required>
         <%if (auctionType.equalsIgnoreCase("car")) {%>
             <%@ include file="auctionCar.jsp" %>
         <%} else if (auctionType.equalsIgnoreCase("boat")) {%>
@@ -185,11 +188,11 @@
             dateFormat.setTimeZone(cal.getTimeZone());
             timeFormat.setTimeZone(cal.getTimeZone());
             String date = dateFormat.format(cal.getTime());
-            cal.add(Calendar.MINUTE, 5); // Min auction length is 5 minutes
+            cal.add(Calendar.MINUTE, 2); // Min auction length is 2 minutes
             String time = timeFormat.format(cal.getTime());
         %>
         <input type="date" name="closingDate" id="closingDate" min="<%out.print(date);%>" required>
-        <input type="time" name="closingDate" id="closingDate" min="<%out.print(time);%>" required>
+        <input type="time" name="closingTime" id="closingTime" min="<%out.print(time);%>" required>
         <br>
         <br>
 
