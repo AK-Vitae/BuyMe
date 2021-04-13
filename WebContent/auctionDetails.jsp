@@ -25,22 +25,22 @@
     <%
         AuctionItem auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
         out.print("<h1> Listing ID: " + auctionItem.getListingId() + "</h1>");
+        out.print("<h1> Auction created on " + auctionItem.getListDate() + "</h1>");
         out.print("<hr>");
         String productType = auctionItem.getType();
-//        if (productType.equalsIgnoreCase("car")) {
-//            Car car = new Car(auctionItem.getListingId());
-//        } else if (productType.equalsIgnoreCase("boat")) {
-//            Boat boat = new Boat(auctionItem.getListingId());
-//        } else if (productType.equalsIgnoreCase("plane")) {
-//            Aircraft aircraft = new Aircraft(auctionItem.getListingId());
-//        }
 
         // Finding if the auction ended or is still open
         String auctionStatus = request.getParameter("status");
+        String auctionStatusColor = null;
+        String closingDateHeader = null;
         if (auctionStatus.equals("completed")) {
             auctionStatus = "Auction Completed";
+            auctionStatusColor = "font-red";
+            closingDateHeader = "Auction completed on " + auctionItem.getClosingDate();
         } else if (auctionStatus.equals("open")) {
             auctionStatus = "Auction Open";
+            auctionStatusColor = "font-green";
+            closingDateHeader = "Auction Closing Date: " + auctionItem.getClosingDate();
         }
         Account userProfile = new Account(auctionItem.getSeller());
     %>
@@ -48,24 +48,41 @@
 <%--<form action="answerProcess.jsp?qid=<%out.println(questionId);%>" method="POST">--%>
 <form>
     <div class="container">
-        <h2>Product: <%
+        <h2>Auction Status: <span class=<%out.println(auctionStatusColor);%>><%out.println(auctionStatus);%></span></h2>
+        <h2>Product(<%out.print(productType);%>): <%
             out.println(auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel());%></h2>
-        <h2>Product Type: <%out.println(productType);%></h2>
-        <h2>Auction Status: <span class="font-green"><%out.println(auctionStatus);%></span></h2>
+        <h2><%out.println(closingDateHeader);%></h2>
         <h3>Seller Information: <a href="userProfile.jsp?userProfile=<%out.println(userProfile.getUsername());%>"><%
             out.println(userProfile.getUsername());%></a></h3>
         <hr>
-        <h3>Condition: <%out.println(auctionItem.getCondition());%></h3>
-        <%if (productType.equalsIgnoreCase("car")) { %>
+
+        <h3>Product Details</h3>
+        <ul>
+            <li><h4><span class="strong">Condition</span>: <%out.println(auctionItem.getCondition());%></h4></li>
+            <li><h4><span class="strong">Product ID (VIN#, HIN#, Tail#, etc)</span>: <%out.println(auctionItem.getProductId());%></h4></li>
+            <li><h4><span class="strong">Exterior Color</span>: <%out.println(auctionItem.getExteriorColor());%></h4></li>
+            <li><h4><span class="strong">Interior Color</span>: <%out.println(auctionItem.getInteriorColor());%></h4></li>
+            <li><h4><span class="strong">Capacity</span>: <%out.println(auctionItem.getCapacity());%></h4></li>
+            <%if (productType.equalsIgnoreCase("car")) { %>
             <% Car car = new Car(auctionItem.getListingId());%>
-            <h3>Mileage: <%out.println(car.getMileage());%></h3>
-        <%} else if (productType.equalsIgnoreCase("boat")) {%>
+            <li><h4><span class="strong">Fuel Type</span>: <%out.println(car.getFuelType());%></h4></li>
+            <li><h4><span class="strong">Mileage</span>: <%out.println(car.getMileage());%></h4></li>
+            <li><h4><span class="strong">Drive Type</span>: <%out.println(car.getDriveType());%></h4></li>
+            <li><h4><span class="strong">Body Type</span>: <%out.println(car.getBodyType());%></h4></li>
+            <li><h4><span class="strong">Transmission</span>: <%out.println(car.getTransmission());%></h4></li>
+            <%} else if (productType.equalsIgnoreCase("boat")) {%>
             <%Boat boat = new Boat(auctionItem.getListingId());%>
-            <h3>Engine Type: <%out.println(boat.getEngineType());%></h3>
-        <%} else if (productType.equalsIgnoreCase("plane")) {%>
+            <li><h4><span class="strong">Engine Type</span>: <%out.println(boat.getEngineType());%></h4></li>
+            <li><h4><span class="strong">Boat Type</span>: <%out.println(boat.getBoatType());%></h4></li>
+            <li><h4><span class="strong">Hull Material</span>: <%out.println(boat.getHullMaterial());%></h4></li>
+            <li><h4><span class="strong">Primary Fuel Type</span>: <%out.println(boat.getPrimaryFuelType());%></h4></li>
+            <%} else if (productType.equalsIgnoreCase("aircraft")) {%>
             <%Aircraft aircraft = new Aircraft(auctionItem.getListingId());%>
-            <h3>Engine Hours: <%out.println(aircraft.getEngineHours());%></h3>
-        <%}%>
+            <li><h4><span class="strong">Air Category</span>: <%out.println(aircraft.getAirCategory());%></h4></li>
+            <li><h4><span class="strong">Engine Hours</span>: <%out.println(aircraft.getEngineHours());%></h4></li>
+            <li><h4><span class="strong">Avionics</span>: <%out.println(aircraft.getAvionics());%></h4></li>
+            <%}%>
+        </ul>
         <div class="signin">
             <p><a href="auctionList.jsp">Go back to list of auctions</a>.</p>
         </div>

@@ -28,13 +28,13 @@
     <%} else { %>
     <h2>Auctions</h2>
     <div class="auction-btn-group">
-        <a href="#">
+        <a href="auction.jsp?type=car">
             <button>Start a New Car Auction</button>
         </a>
-        <a href="#">
+        <a href="auction.jsp?type=boat">
             <button>Start a New Boat Auction</button>
         </a>
-        <a href="#">
+        <a href="auction.jsp?type=aircraft">
             <button>Start a New Aircraft Auction</button>
         </a>
     </div>
@@ -63,11 +63,12 @@
                         String currentDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(date);
                         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
                         AuctionItem auctionItem = new AuctionItem(listingId);
+                        String type = auctionItem.getType();
 
                         if (sdf.parse(closingDate).before(sdf.parse(currentDate))) {
-                            out.println("<li><a href=\"auctionDetails.jsp?status=completed&listingId=" + auctionItem.getListingId() + "\">" + "Status: Auction Completed<br>" +"Product: " + auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel() + "</a></li>");
+                            out.println("<li><a href=\"auctionDetails.jsp?status=completed&listingId=" + auctionItem.getListingId() + "\">" + "Status: <span class=\"font-red\">Auction Completed<br></span>" +"Product: " + auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel() + "<br>Product Type: "+type+"</a></li>");
                         } else {
-                            out.println("<li><a href=\"auctionDetails.jsp?status=open&listingId=" + auctionItem.getListingId() + "\">" + "Status: Auction Open<br>" +"Product: " + auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel() + "</a></li>");
+                            out.println("<li><a href=\"auctionDetails.jsp?status=open&listingId=" + auctionItem.getListingId() + "\">" + "Status: <span class=\"font-green\">Auction Open<br></span>" +"Product: " + auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel() + "<br>Product Type: "+type+"</a></li>");
                         }
                         auctionList.add(auctionItem);
                     } while (rs.next());

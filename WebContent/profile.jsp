@@ -26,7 +26,6 @@
 
 <div class="marginLeft-Right">
     <h1>Welcome <%out.println(userAccount.getFirstName());%></h1>
-    <h2>Access Level: <%out.println(userAccount.getAccessLevel());%></h2>
     <hr>
     <%if (userAccount.getAccessLevel() != 1) {%>
     <a href='#'>Bidding History</a>
@@ -35,7 +34,7 @@
     <br>
     <a href='deactivateAccount.jsp'>Deactivate Account</a>
     <br>
-    <%} else {%>
+    <%} else if (userAccount.getAccessLevel() == 1) {%>
     <a href='createCustomerRepAccount.jsp'>Create a Customer Representative Account</a>
     <br>
     <a href='salesReport.jsp'>Generate Sales Report</a>

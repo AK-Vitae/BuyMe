@@ -31,9 +31,6 @@
         session.setAttribute("recentlyViewedAccount", recentlyViewedAccount);
     %>
     <%if (recentlyViewedAccount.getIsActive() == 0) {%>
-    <h1><%out.println(recentlyViewedAccount.getIsActive());%></h1>
-    <h1><%out.println(request.getParameter("userProfile"));%></h1>
-    <br>
     <h1>This Account Has Been Deactivated</h1>
     <%} else { %>
 
