@@ -34,7 +34,7 @@ UNLOCK TABLES;
 
 SELECT * FROM `account`;
 
--- Create a question table for q&a 
+-- Create a question table for q&a
 
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question`
@@ -93,15 +93,74 @@ CREATE TABLE `car`
     FOREIGN KEY(`listingID`) REFERENCES auctionItem(`listingID`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- list car
+DROP TABLE IF EXISTS `boat`;
+CREATE TABLE `boat`
+(
+    `listingID` 		INT NOT NULL,
+    `engineType`		VARCHAR(50) DEFAULT NULL,
+    `boatType`			VARCHAR(50) DEFAULT NULL,
+    `hullMaterial`		VARCHAR(50) DEFAULT NULL,
+    `primaryFuelType`	VARCHAR(50) DEFAULT NULL,
+    PRIMARY KEY (`listingID`),
+    FOREIGN KEY(`listingID`) REFERENCES auctionItem(`listingID`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+DROP TABLE IF EXISTS `aircraft`;
+CREATE TABLE `aircraft`
+(
+    `listingID` 		INT NOT NULL,
+    `airCategory`		VARCHAR(50) DEFAULT NULL,
+    `engineHours`		INT DEFAULT NULL,
+    `avionics`			VARCHAR(100) DEFAULT NULL,
+    PRIMARY KEY (`listingID`),
+    FOREIGN KEY(`listingID`) REFERENCES auctionItem(`listingID`) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- insert for car
 LOCK TABLES auctionItem WRITE;
 INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller) VALUES
-('acd', 'car', 12000.00, 18000.00, 'white', 'black', 'Pasat', 'Volkswagon', 'used', 5, '2022-05-01 12:30:00', 2015, '2021-04-11 16:30:00', 6);
+('acd', 'Car', 12000.00, 18000.00, 'white', 'black', 'Pasat', 'Volkswagon', 'used', 5, '2022-05-01 12:30:00', 2015, '2021-04-11 16:30:00', 6);
 UNLOCK TABLES;
-select * from `auctionItem`;
 
 LOCK TABLES car WRITE;
 INSERT INTO car (listingID, fuelType, mileage, driveType, bodyType, transmission) VALUES
-(LAST_INSERT_ID(), 'super', 50000, 'FWD', 'Sedan', 'automatic');
+    -- (1, 'super', 80000, 'FWD', 'Sedan', 'automatic'),
+    (LAST_INSERT_ID(), 'super', 50000, 'FWD', 'Sedan', 'automatic');
 UNLOCK TABLES;
+
+-- insert for boat
+LOCK TABLES auctionItem WRITE;
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller) VALUES
+('adc', 'Boat', 12000.00, 18000.00, 'black', 'red', 'X22', 'Mastercraft', 'new', 5, '2020-05-01 12:30:00', 2019, '2020-04-12 16:30:00', 5);
+UNLOCK TABLES;
+
+LOCK TABLES boat WRITE;
+INSERT INTO boat (listingID, engineType, boatType, hullMaterial, primaryFuelType) VALUES
+(LAST_INSERT_ID(), 'Direct Drive', 'Dragger', 'Fiberglass', 'Other');
+UNLOCK TABLES;
+
+LOCK TABLES auctionItem WRITE;
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller) VALUES
+('ccb', 'Aircraft', 5750000.00, 5760000.00, 'white and blue', 'white', 'XLS+', 'Cessna', 'used', 9, '2021-04-18 12:30:00', 2019, '2021-04-12 16:30:00', 5);
+UNLOCK TABLES;
+
+LOCK TABLES aircraft WRITE;
+INSERT INTO aircraft (listingID, airCategory, engineHours, avionics) VALUES
+(LAST_INSERT_ID(), 'Twin Piston', 2231, 'Collins Pro Line 21 Avionics 4 Tube EFIS');
+UNLOCK TABLES;
+
+select * from `auctionItem`;
+select aI.listingID, ai.productID, aI.type, aI.listPrice, aI.minSellPrice, aI.soldPrice, aI.exteriorColor, aI.interiorColor, aI.model, aI.manufacturer, aI.`condition`, aI.capacity, aI.closingDate, aI.`year`, aI.listDate, aI.seller, aI.purchaser, c.fuelType, c.mileage, c.driveType, c.bodyType, c.transmission
+from auctionItem aI inner join car c
+                               on aI.listingID = c.listingID;
+
+select aI.listingID, ai.productID, aI.type, aI.listPrice, aI.minSellPrice, aI.soldPrice, aI.exteriorColor, aI.interiorColor, aI.model, aI.manufacturer, aI.`condition`, aI.capacity, aI.closingDate, aI.`year`, aI.listDate, aI.seller, aI.purchaser, b.engineType, b.boatType, b.hullMaterial, b.primaryFuelType
+from auctionItem aI inner join boat b
+                               on aI.listingID = b.listingID;
+
+select aI.listingID, ai.productID, aI.type, aI.listPrice, aI.minSellPrice, aI.soldPrice, aI.exteriorColor, aI.interiorColor, aI.model, aI.manufacturer, aI.`condition`, aI.capacity, aI.closingDate, aI.`year`, aI.listDate, aI.seller, aI.purchaser, a.airCategory, a.engineHours, a.avionics
+from auctionItem aI inner join aircraft a
+                               on aI.listingID = a.listingID;
 select * from `car`;
+select * from `boat`;
+select * from `aircraft`;
