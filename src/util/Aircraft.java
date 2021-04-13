@@ -27,7 +27,7 @@ public class Aircraft extends AuctionItem{
             st = conn.createStatement();
 
             // Create query for login validation
-            rs = st.executeQuery("SELECT * FROM boat WHERE listingID='" + listingId + "';");
+            rs = st.executeQuery("SELECT * FROM aircraft WHERE listingID='" + listingId + "';");
             if (rs.next()) {
                 this.setListingId(listingId);
                 this.setAirCategory(rs.getString("airCategory"));

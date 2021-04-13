@@ -177,7 +177,11 @@ public class AuctionItem {
     }
 
     public void setCondition(String condition) {
-        this.condition = condition;
+        if (condition == null || type.isEmpty()) {
+            this.condition = condition;
+        } else {
+            this.condition = condition.substring(0, 1).toUpperCase() + condition.substring(1);
+        }
     }
 
     public int getCapacity() {
