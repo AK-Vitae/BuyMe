@@ -170,13 +170,32 @@ DROP TABLE IF EXISTS `bid`;
 CREATE TABLE `bid`
 (
     `listingID` INT,
-    `purchaser` INT,
-    `bidValue`  DECIMAL(20, 2) DEFAULT NULL,
+    `bidder` INT,
+    `bidValue`  DECIMAL(20, 2),
     `bidDate`   DATETIME DEFAULT NULL,
     PRIMARY KEY (listingID, bidValue),
     FOREIGN KEY (listingID) REFERENCES auctionitem(listingID) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (purchaser) REFERENCES account(account_number) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (bidder) REFERENCES account(account_number) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+LOCK TABLES bid WRITE;
+INSERT INTO bid (listingID, bidder, bidValue) VALUES
+(1, '2', '200.00'),
+(1, '3', '210.00'),
+(1, '4', '220.00'),
+(2, '2', '210.00'),
+(2, '2', '220.00'),
+(2, '3', '230.00'),
+(3, '2', '210.00'),
+(3, '3', '220.00'),
+(3, '4', '230.00');
+UNLOCK TABLES;
+SELECT * FROM bid;
+
+-- Transaction History
+-- SELECT * FROM auctionItem WHERE seller = 7; -- All auctions created by a user; Use a if condition to check if the auction ended without a winner
+-- SELECT * FROM auctionItem WHERE purchaser = 7; -- All auctions won by user
+-- SELECT * FROM bid WHERE bidder = 2 GROUP BY listingID, bidder; -- All auctions the user participated in
 
 # Total Earnings
 -- SELECT SUM(soldPrice) AS `Total Earnings` FROM auctionItem;
