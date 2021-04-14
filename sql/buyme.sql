@@ -165,6 +165,19 @@ select * from `car`;
 select * from `boat`;
 select * from `aircraft`;
 
+-- Bid
+DROP TABLE IF EXISTS `bid`;
+CREATE TABLE `bid`
+(
+    `listingID` INT,
+    `purchaser` INT,
+    `bidValue`  DECIMAL(20, 2) DEFAULT NULL,
+    `bidDate`   DATETIME DEFAULT NULL,
+    PRIMARY KEY (listingID, bidValue),
+    FOREIGN KEY (listingID) REFERENCES auctionitem(listingID) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (purchaser) REFERENCES account(account_number) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 # Total Earnings
 -- SELECT SUM(soldPrice) AS `Total Earnings` FROM auctionItem;
 # Earnings Per Item
