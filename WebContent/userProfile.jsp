@@ -28,13 +28,14 @@
     <%
         Account userAccount = (Account) session.getAttribute("userAccount");
         Account recentlyViewedAccount = new Account(request.getParameter("userProfile"));
+        int recentlyViewedAccountNumber = recentlyViewedAccount.getAccountNumber();
         session.setAttribute("recentlyViewedAccount", recentlyViewedAccount);
     %>
     <%if (recentlyViewedAccount.getIsActive() == 0) {%>
     <h1>This Account Has Been Deactivated</h1>
     <%} else { %>
 
-    <a href='#'>Bidding History</a>
+    <a href='transactionHistory.jsp?accountNumber=<%out.print(recentlyViewedAccountNumber);%>'>Transaction History</a>
     <br>
     <%if (userAccount.getAccessLevel() == 2) {%>
     <a href='editAccountInformation.jsp?profile=userProfile'>Edit This Account's Information</a>
@@ -43,6 +44,7 @@
     <%}%>
     <%}%>
 </div>
+<%--IF A LOGGED IN USER IS VIEWING THEIR OWN PROFILE--%>
 <%} else { %>
 <%response.sendRedirect("profile.jsp");%>
 <% } %>

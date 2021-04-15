@@ -22,22 +22,30 @@
 <%} else { %>
 <%
     Account userAccount = (Account) session.getAttribute("userAccount");
+    int accountNumber = userAccount.getAccountNumber();
 %>
 
 <div class="marginLeft-Right">
     <h1>Welcome <%out.println(userAccount.getFirstName());%></h1>
     <hr>
-    <%if (userAccount.getAccessLevel() != 1) {%>
-    <a href='#'>Bidding History</a>
+    <% if (userAccount.getAccessLevel() == 1) {%>
+    <h2>Admin Functions</h2>
+    <a href='createCustomerRepAccount.jsp'>Create a Customer Representative Account</a>
+    <br>
+    <a href='salesReport.jsp'>Generate Sales Report</a>
+    <%} else if (userAccount.getAccessLevel() == 2) {%>
+    <h2>Customer Representative Functions</h2>
+    <a href='questionsAndAnswers.jsp'>Answer Customers' Questions</a>
+    <br>
+    <a href='auctionList.jsp'>Manage Auctions</a>
+    <br>
+    <%} else if (userAccount.getAccessLevel() == 3) {%>
+    <a href='transactionHistory.jsp?accountNumber=<%out.print(accountNumber);%>'>Transaction History</a>
     <br>
     <a href='editAccountInformation.jsp'>Edit Account Information</a>
     <br>
     <a href='deactivateAccount.jsp'>Deactivate Account</a>
     <br>
-    <%} else if (userAccount.getAccessLevel() == 1) {%>
-    <a href='createCustomerRepAccount.jsp'>Create a Customer Representative Account</a>
-    <br>
-    <a href='salesReport.jsp'>Generate Sales Report</a>
     <% } %>
 </div>
 <% } %>
