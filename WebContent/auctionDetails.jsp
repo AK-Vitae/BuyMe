@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BuyMe</title>
     <link rel="stylesheet" href="css/main.css">
+    <script src="js/main.js"></script>
 </head>
 
 <body>
@@ -21,6 +22,7 @@
     <a href="login.jsp">Please Login</a>
 </div>
 <%} else { %>
+<%Account userAccount = (Account) session.getAttribute("userAccount");%>
 <div class="marginLeft-Right">
     <%
         AuctionItem auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
@@ -83,6 +85,11 @@
             <li><h4><span class="strong">Avionics</span>: <%out.println(aircraft.getAvionics());%></h4></li>
             <%}%>
         </ul>
+        <%if ( userAccount.getAccessLevel() == 2) {%>
+        <button onclick="deleteAuction()" type="button" class="deactivatebtn">Delete this Account</button>
+        <%} else { %>
+
+        <% } %>
         <div class="signin">
             <p><a href="auctionList.jsp">Go back to list of auctions</a>.</p>
         </div>

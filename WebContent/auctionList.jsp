@@ -5,6 +5,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="util.Account" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -58,17 +59,31 @@
                 } else {
                     do {
                         int listingId = rs.getInt("listingID");
+
+                        AuctionItem auctionItem = new AuctionItem(listingId);
+                        String type = auctionItem.getType();
+                        Account auctionItemSeller = new Account(auctionItem.getSeller());
+
                         String closingDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(rs.getTimestamp("closingDate"));
                         Date date = new Date();
                         String currentDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(date);
                         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-                        AuctionItem auctionItem = new AuctionItem(listingId);
-                        String type = auctionItem.getType();
+
 
                         if (sdf.parse(closingDate).before(sdf.parse(currentDate))) {
-                            out.println("<li><a href=\"auctionDetails.jsp?status=completed&listingId=" + auctionItem.getListingId() + "\">" + "Status: <span class=\"font-red\">Auction Completed<br></span>" +"Product: " + auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel() + "<br>Product Type: "+type+"</a></li>");
+                            out.println("<li><a href=\"auctionDetails.jsp?status=completed&listingId=" + auctionItem.getListingId() + "\">"
+                                    + "Status: <span class=\"font-red\">Auction Completed<br></span>"
+                                    + "Product: " + auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel()
+                                    + "<br>Product Type: " + type
+                                    + "<br>Seller: " + auctionItemSeller.getUsername()
+                                    + "</a></li>");
                         } else {
-                            out.println("<li><a href=\"auctionDetails.jsp?status=open&listingId=" + auctionItem.getListingId() + "\">" + "Status: <span class=\"font-green\">Auction Open<br></span>" +"Product: " + auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel() + "<br>Product Type: "+type+"</a></li>");
+                            out.println("<li><a href=\"auctionDetails.jsp?status=open&listingId=" + auctionItem.getListingId() + "\">"
+                                    + "Status: <span class=\"font-green\">Auction Open<br></span>"
+                                    + "Product: " + auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel()
+                                    + "<br>Product Type: " + type
+                                    + "<br>Seller: " + auctionItemSeller.getUsername()
+                                    + "</a></li>");
                         }
                         auctionList.add(auctionItem);
                     } while (rs.next());
