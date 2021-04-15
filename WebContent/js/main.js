@@ -15,7 +15,7 @@ function search() {
     }
 }
 
-function passwordCheck () {
+function passwordCheck() {
     if (document.getElementById('psw').value ===
         document.getElementById('pswConfirmation').value) {
         document.getElementById('message').style.color = 'green';
@@ -46,3 +46,51 @@ function showPasswordWithConfirmation() {
         y.type = "password";
     }
 }
+
+function showHideDiv() {
+    const x = document.getElementById("showHideDiv");
+    const y = document.getElementById("showHideDiv2");
+    const z = document.getElementById("showHideDiv3");
+    y.style.display = "none";
+    z.style.display = "none";
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
+function showHideDiv2() {
+    const x = document.getElementById("showHideDiv");
+    const y = document.getElementById("showHideDiv2");
+    const z = document.getElementById("showHideDiv3");
+    x.style.display = "none";
+    z.style.display = "none";
+    if (y.style.display === "none") {
+        y.style.display = "block";
+    } else {
+        y.style.display = "none";
+    }
+}
+
+function showHideDiv3() {
+    const x = document.getElementById("showHideDiv");
+    const y = document.getElementById("showHideDiv2");
+    const z = document.getElementById("showHideDiv3");
+    x.style.display = "none";
+    y.style.display = "none";
+    if (z.style.display === "none") {
+        z.style.display = "block";
+    } else {
+        z.style.display = "none";
+    }
+}
+
+function deleteAuction() {
+    if (confirm("Are you sure?")) {
+        location.href = "auctionList.jsp";
+    }
+}
+
+
+

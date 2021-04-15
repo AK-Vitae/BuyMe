@@ -128,14 +128,14 @@ a {
     margin-bottom: 12px; /* Add some space below the input */
 }
 
-#myUL {
+#myUL, #myUL2, #myUL3 {
     /* Remove default list styling */
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-#myUL li a {
+#myUL li a, #myUL2 li a, #myUL3 li a {
     border: 1px solid #ddd; /* Add a border to all links */
     margin-top: -1px; /* Prevent double borders */
     background-color: #f6f6f6; /* Grey background color */
@@ -146,6 +146,6 @@ a {
     display: block; /* Make it into a block element to fill the whole list */
 }
 
-#myUL li a:hover:not(.header) {
+#myUL li a:hover:not(.header), #myUL2 li a:hover:not(.header), #myUL3 li a:hover:not(.header) {
     background-color: #eee; /* Add a hover effect to all links, except for headers */
 }
