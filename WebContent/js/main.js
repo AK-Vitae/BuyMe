@@ -86,9 +86,9 @@ function showHideDiv3() {
     }
 }
 
-function deleteAuction() {
+function deleteAuction(listingId) {
     if (confirm("Are you sure?")) {
-        location.href = "auctionList.jsp";
+        location.href = "auctionDelete.jsp?listingId=" + listingId;
     }
 }
 
