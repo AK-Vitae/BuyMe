@@ -86,7 +86,7 @@
             <%}%>
         </ul>
         <%if ( userAccount.getAccessLevel() == 2) {%>
-        <button onclick="deleteAuction()" type="button" class="deactivatebtn">Delete this Account</button>
+        <button onclick="deleteAuction('<%out.print(auctionItem.getListingId());%>')" type="button" class="deactivatebtn">Delete this Auction</button>
         <%} else { %>
 
         <% } %>

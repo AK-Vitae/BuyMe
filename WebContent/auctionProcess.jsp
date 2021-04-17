@@ -123,7 +123,7 @@
         if (resultAuction < 1) {
             out.println("<div class=\"container signin\"><p>There was a problem creating your auction <br><a href=\"auctionList.jsp\">Try Again</a>.</p> </div>");
         } else {
-            out.println("<div class=\"container signin\"><p>Your auction was created <br><a href=\" auctionList.jsp\">Go back to list of auctions</a>.</p> </div>");
+            out.println("<div class=\"container signin\"><p>Your auction was created <br><a href=\" auctionList.jsp\">Go back to the list of auctions</a>.</p> </div>");
         }
     } catch (SQLException se) {
         out.print("<p>Error connecting to MYSQL server.</p>");

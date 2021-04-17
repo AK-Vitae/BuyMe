@@ -38,7 +38,7 @@
 <input type="number" placeholder="Enter the current engine hours of the aircraft" name="engineHours" id="engineHours"
        min="0" step=".1">
 
-<label for="avionics"><b>Question</b></label>
+<label for="avionics"><b>Avionics</b></label>
 <br>
 <textarea placeholder="Enter the aircraft's avionics equipment" name="avionics" id="avionics"></textarea>
 <br>
