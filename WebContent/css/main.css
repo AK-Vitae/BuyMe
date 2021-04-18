@@ -149,3 +149,36 @@ a {
 #myUL li a:hover:not(.header), #myUL2 li a:hover:not(.header), #myUL3 li a:hover:not(.header) {
     background-color: #eee; /* Add a hover effect to all links, except for headers */
 }
+
+table, th, td {
+    table-layout: fixed;
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table.center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th {
+    padding: 15px;
+}
+
+td {
+    padding: 15px;
+}
+
+tr:nth-child(odd) {
+    background-color: #f2f2f2
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+caption {
+    font-weight: bold;
+}
