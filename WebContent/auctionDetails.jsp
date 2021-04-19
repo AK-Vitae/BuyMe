@@ -26,6 +26,7 @@
 <div class="marginLeft-Right">
     <%
         AuctionItem auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
+        session.setAttribute("recentlyViewedListing", auctionItem.getListingId());
         out.print("<h1> Listing ID: " + auctionItem.getListingId() + "</h1>");
         out.print("<h1> Auction created on " + auctionItem.getListDate() + "</h1>");
         out.print("<hr>");

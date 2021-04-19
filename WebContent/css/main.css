@@ -57,11 +57,31 @@ hr {
     opacity: 0.9;
 }
 
-.registerbtn:hover, .loginbtn:hover {
+.mark-as-read {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    float: right;
+    border-radius: 4px;
+    opacity: 0.9;
+}
+
+.mark-as-unread {
+    background-color: #e72a2a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    float: right;
+    border-radius: 4px;
+    opacity: 0.9;
+}
+
+.registerbtn:hover, .loginbtn:hover, .mark-as-read:hover {
     background-color: #45a049;
 }
 
-.deactivatebtn:hover {
+.deactivatebtn:hover, .mark-as-unread:hover {
     background-color: #b80606;
 }
 
@@ -128,14 +148,14 @@ a {
     margin-bottom: 12px; /* Add some space below the input */
 }
 
-#myUL, #myUL2, #myUL3 {
+#myUL, #myUL2, #myUL3, #myULNoLink {
     /* Remove default list styling */
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-#myUL li a, #myUL2 li a, #myUL3 li a {
+#myUL li a, #myUL2 li a, #myUL3 li a, #myULNoLink li {
     border: 1px solid #ddd; /* Add a border to all links */
     margin-top: -1px; /* Prevent double borders */
     background-color: #f6f6f6; /* Grey background color */
