@@ -21,12 +21,22 @@
     try {
         //Get parameters
         conn = db.getConnection();
-        int alertID = Integer.parseInt(request.getParameter("alertID"));
-        boolean isRead = Boolean.parseBoolean(request.getParameter("isRead"));
-
-        // Generate and Execute Query
         st = conn.createStatement();
+        int alertID = Integer.parseInt(request.getParameter("alertID"));
 
+        if (request.getParameter("process") != null) {
+            int i = st.executeUpdate("DELETE FROM alert WHERE alertID='" + alertID + "';");
+            if (i < 1) {
+                out.println("<div class=\"container signin\"><p>Error: Alert was not deleted. <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
+            } else {
+                out.println("<div class=\"container signin\"><p>Alert was deleted <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
+            }
+            return;
+        }
+
+
+        boolean isRead = Boolean.parseBoolean(request.getParameter("isRead"));
+        // Generate and Execute Query
         if (!isRead) {
             int i = st.executeUpdate("UPDATE alert SET isRead = 1 WHERE alertID='" + alertID + "';");
             if (i < 1) {

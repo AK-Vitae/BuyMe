@@ -21,55 +21,6 @@
 </head>
 
 <body>
-<%
-    Database dbAlert = new Database();
-    int alertCount = 0;
-    Connection connAlert = null;
-    Statement stAlert = null;
-    ResultSet rsAlert = null;
-    try {
-        // Open DB Connection and get parameters
-        connAlert = dbAlert.getConnection();
-        stAlert = connAlert.createStatement();
-
-        // Create query for login validation
-        rsAlert = stAlert.executeQuery("SELECT * FROM alert;");
-        if (!rsAlert.next()) {
-        } else {
-            do {
-                int alertID = rsAlert.getInt("alertID");
-                Account userProfile = (Account) session.getAttribute("userAccount");
-                Alert alert = new Alert(alertID);
-                if (alert.getUser() == userProfile.getAccountNumber() && !alert.isRead()) {
-                    alertCount++;
-                }
-            } while (rsAlert.next());
-        }
-    } catch (SQLException se) {
-        out.print("<p>Error connecting to MYSQL server.</p>");
-        se.printStackTrace();
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        // Close
-        try {
-            if (rsAlert != null) rsAlert.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            if (stAlert != null) stAlert.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            if (connAlert != null) dbAlert.closeConnection(connAlert);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-%>
-
 <nav class="navbar navbar-default" style="padding-top: 5px">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -87,6 +38,54 @@
             </li>
         </ul>
         <% if ((session.getAttribute("user") != null)) { %>
+        <%
+            Database dbAlert = new Database();
+            int alertCount = 0;
+            Connection connAlert = null;
+            Statement stAlert = null;
+            ResultSet rsAlert = null;
+            try {
+                // Open DB Connection and get parameters
+                connAlert = dbAlert.getConnection();
+                stAlert = connAlert.createStatement();
+
+                // Create query for login validation
+                rsAlert = stAlert.executeQuery("SELECT * FROM alert;");
+                if (!rsAlert.next()) {
+                } else {
+                    do {
+                        int alertID = rsAlert.getInt("alertID");
+                        Account userProfile = (Account) session.getAttribute("userAccount");
+                        Alert alert = new Alert(alertID);
+                        if (alert.getUser() == userProfile.getAccountNumber() && !alert.isRead()) {
+                            alertCount++;
+                        }
+                    } while (rsAlert.next());
+                }
+            } catch (SQLException se) {
+                out.print("<p>Error connecting to MYSQL server.</p>");
+                se.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                // Close
+                try {
+                    if (rsAlert != null) rsAlert.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (stAlert != null) stAlert.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (connAlert != null) dbAlert.closeConnection(connAlert);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        %>
 
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">

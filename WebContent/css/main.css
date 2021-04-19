@@ -77,6 +77,13 @@ hr {
     opacity: 0.9;
 }
 
+.close-button {
+    cursor: pointer;
+    /*position: absolute;*/
+    float: right;
+    /*padding: 5px 5px;*/
+}
+
 .registerbtn:hover, .loginbtn:hover, .mark-as-read:hover {
     background-color: #45a049;
 }

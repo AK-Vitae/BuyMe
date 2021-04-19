@@ -72,9 +72,12 @@
                         Account userAccount = (Account) session.getAttribute("userAccount");
                         if (alert.getUser() == userAccount.getAccountNumber()) {
                             out.println("<li>"
-                                    + "Status: <span class=\"" + isReadHeaderColor + "\">" + isReadStatus + "<br></span>"
-                                    + "Topic: " + alert.getAlertTopic()
-                                    + "<br>Message: " + alert.getAlertMessage() +"      "
+                                    + "Status: <span class=\"" + isReadHeaderColor + "\">" + isReadStatus + "</span>"
+                                    + "<a href=\"alertMarkAs.jsp?process=delete&alertID="+alertID+"\">"
+                                    + "<span class=\"close-button\">&times;</span>"
+                                    + "</a>"
+                                    + "<br>Topic: " + alert.getAlertTopic()
+                                    + "<br>Message: " + alert.getAlertMessage()
                                     + "<a href=\"alertMarkAs.jsp?alertID="+alertID+isReadLink+"\">"
                                     + "<button class='"+isReadButton+"'>Mark as "+markAs+"</button>"
                                     + "</a>"
