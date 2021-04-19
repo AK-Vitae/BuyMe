@@ -154,7 +154,7 @@
             out.print("<th style=\"text-align: center;\">Quantity</th>");
             out.print("<th style=\"text-align: center;\">Earnings</th>");
             out.print("</tr>");
-            rs = st.executeQuery("SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(soldPrice) AS Earnings " +
+            rs = st.executeQuery("SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(minSellPrice) AS Earnings " +
                     "FROM auctionItem " +
                     "WHERE minSellPrice IS NOT NULL " +
                     "GROUP BY manufacturer, model " +
