@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ page import="util.*" %>
+<%@ page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +27,15 @@
 <div class="marginLeft-Right">
     <%
         AuctionItem auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
-        session.setAttribute("recentlyViewedListing", auctionItem.getListingId());
+        ArrayList<AuctionItem> recentlyViewedAuctions;
+        if ((session.getAttribute("recentlyViewedAuctions") != null)) {
+            recentlyViewedAuctions = (ArrayList<AuctionItem>) session.getAttribute("recentlyViewedAuctions");
+        } else {
+            recentlyViewedAuctions = new ArrayList<>();
+        }
+        recentlyViewedAuctions.add(auctionItem);
+        session.setAttribute("recentlyViewedAuctions", recentlyViewedAuctions);
+
         out.print("<h1> Listing ID: " + auctionItem.getListingId() + "</h1>");
         out.print("<h1> Auction created on " + auctionItem.getListDate() + "</h1>");
         out.print("<hr>");
@@ -62,9 +71,12 @@
         <h3>Product Details</h3>
         <ul>
             <li><h4><span class="strong">Condition</span>: <%out.println(auctionItem.getCondition());%></h4></li>
-            <li><h4><span class="strong">Product ID (VIN#, HIN#, Tail#, etc)</span>: <%out.println(auctionItem.getProductId());%></h4></li>
-            <li><h4><span class="strong">Exterior Color</span>: <%out.println(auctionItem.getExteriorColor());%></h4></li>
-            <li><h4><span class="strong">Interior Color</span>: <%out.println(auctionItem.getInteriorColor());%></h4></li>
+            <li><h4><span class="strong">Product ID (VIN#, HIN#, Tail#, etc)</span>: <%
+                out.println(auctionItem.getProductId());%></h4></li>
+            <li><h4><span class="strong">Exterior Color</span>: <%out.println(auctionItem.getExteriorColor());%></h4>
+            </li>
+            <li><h4><span class="strong">Interior Color</span>: <%out.println(auctionItem.getInteriorColor());%></h4>
+            </li>
             <li><h4><span class="strong">Capacity</span>: <%out.println(auctionItem.getCapacity());%></h4></li>
             <%if (productType.equalsIgnoreCase("car")) { %>
             <% Car car = new Car(auctionItem.getListingId());%>
@@ -86,8 +98,10 @@
             <li><h4><span class="strong">Avionics</span>: <%out.println(aircraft.getAvionics());%></h4></li>
             <%}%>
         </ul>
-        <%if ( userAccount.getAccessLevel() == 2) {%>
-        <button onclick="deleteAuction('<%out.print(auctionItem.getListingId());%>')" type="button" class="deactivatebtn">Delete this Auction</button>
+        <%if (userAccount.getAccessLevel() == 2) {%>
+        <button onclick="deleteAuction('<%out.print(auctionItem.getListingId());%>')" type="button"
+                class="deactivatebtn">Delete this Auction
+        </button>
         <%} else { %>
 
         <% } %>
