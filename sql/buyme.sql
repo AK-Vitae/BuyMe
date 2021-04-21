@@ -184,19 +184,19 @@ CREATE TABLE `bid`
 );
 
 LOCK TABLES bid WRITE;
-INSERT INTO bid (listingID, bidder, bidValue) VALUES
-(4, 6, 200.00),
-(1, 3, 210.00),
-(1, 4, 220.00),
-(2, 2, 210.00),
-(2, 2, 220.00),
-(2, 3, 230.00),
-(3, 2, 210.00),
-(3, 3, 220.00),
-(3, 4, 230.00);
+INSERT INTO bid (listingID, bidder, bidValue, bidDate) VALUES
+(1, 3, 210.00, '2021-04-18 12:30:00'),
+(1, 4, 220.00, '2021-04-18 13:30:00'),
+(2, 2, 210.00, '2021-04-18 12:30:00'),
+(2, 2, 220.00, '2021-04-18 13:30:00'),
+(2, 3, 230.00, '2021-04-18 14:30:00'),
+(3, 2, 210.00, '2021-04-18 12:30:00'),
+(3, 3, 220.00, '2021-04-18 13:30:00'),
+(3, 4, 230.00, '2021-04-18 14:30:00');
 UNLOCK TABLES;
 SELECT * FROM bid;
 
+SELECT * FROM bid WHERE listingID = 2 ORDER BY bidDate DESC;
 -- Alerts
 DROP TABLE IF EXISTS `alert`;
 CREATE TABLE `alert`
