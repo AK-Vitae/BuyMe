@@ -231,4 +231,8 @@ public class AuctionItem {
     public void setPurchaser(int purchaser) {
         this.purchaser = purchaser;
     }
+
+    public String getAuctionItemName() {
+        return  this.year+" "+this.manufacturer+" "+this.model;
+    }
 }

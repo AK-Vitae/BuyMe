@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ page import="util.*" %>
+<%@page import="database.Database" %>
+<%@page import="util.AuctionItem" %>
+<%@ page import="java.sql.*" %>
+<%@ page import="util.Account" %>
+<%@ page import="util.Bid" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
@@ -23,10 +30,19 @@
     <a href="login.jsp">Please Login</a>
 </div>
 <%} else { %>
-<%Account userAccount = (Account) session.getAttribute("userAccount");%>
+<%
+    Account userAccount = (Account) session.getAttribute("userAccount");
+
+%>
 <div class="marginLeft-Right">
     <%
-        AuctionItem auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
+        AuctionItem auctionItem;
+//        if (request.getParameter("listingId") == null || request.getParameter("listingId") == "") {
+//            auctionItem = new AuctionItem(1);
+//        } else {
+            auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
+//        }
+
         ArrayList<AuctionItem> recentlyViewedAuctions;
         if ((session.getAttribute("recentlyViewedAuctions") != null)) {
             recentlyViewedAuctions = (ArrayList<AuctionItem>) session.getAttribute("recentlyViewedAuctions");
@@ -42,10 +58,17 @@
         String productType = auctionItem.getType();
 
         // Finding if the auction ended or is still open
-        String auctionStatus = request.getParameter("status");
+        boolean isCompleted = false;
+        String auctionStatus;
+//        if (request.getParameter("status") == null || request.getParameter("status") == "") {
+//            auctionStatus = "completed";
+//        } else {
+            auctionStatus = request.getParameter("status");
+//        }
         String auctionStatusColor = null;
         String closingDateHeader = null;
         if (auctionStatus.equals("completed")) {
+            isCompleted = true;
             auctionStatus = "Auction Completed";
             auctionStatusColor = "font-red";
             closingDateHeader = "Auction completed on " + auctionItem.getClosingDate();
@@ -55,6 +78,51 @@
             closingDateHeader = "Auction Closing Date: " + auctionItem.getClosingDate();
         }
         Account userProfile = new Account(auctionItem.getSeller());
+
+        //Get Most Recent Bid
+        Database db = new Database();
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+        Locale locale = new Locale("en", "US");
+        NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
+        double bidValue = 0;
+
+        try {
+            // Open DB Connection and get parameters
+            conn = db.getConnection();
+            st = conn.createStatement();
+            int listingId = auctionItem.getListingId();
+
+            rs = st.executeQuery("SELECT * FROM bid WHERE listingID='" + listingId + "' ORDER BY bidDate DESC LIMIT 1;");
+            if (!rs.next()) {
+//                out.print("<h2>No bids placed for this auction</h2>");
+            } else {
+                bidValue = rs.getDouble("bidValue");
+            }
+        } catch (SQLException se) {
+            out.print("<p>Error connecting to MYSQL server.</p>");
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close
+            try {
+                if (rs != null) rs.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                if (st != null) st.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                if (conn != null) db.closeConnection(conn);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     %>
 </div>
 <%--<form action="answerProcess.jsp?qid=<%out.println(questionId);%>" method="POST">--%>
@@ -68,36 +136,64 @@
             out.println(userProfile.getUsername());%></a></h3>
         <hr>
 
-        <h3>Product Details</h3>
-        <ul>
-            <li><h4><span class="strong">Condition</span>: <%out.println(auctionItem.getCondition());%></h4></li>
-            <li><h4><span class="strong">Product ID (VIN#, HIN#, Tail#, etc)</span>: <%
-                out.println(auctionItem.getProductId());%></h4></li>
-            <li><h4><span class="strong">Exterior Color</span>: <%out.println(auctionItem.getExteriorColor());%></h4>
-            </li>
-            <li><h4><span class="strong">Interior Color</span>: <%out.println(auctionItem.getInteriorColor());%></h4>
-            </li>
-            <li><h4><span class="strong">Capacity</span>: <%out.println(auctionItem.getCapacity());%></h4></li>
-            <%if (productType.equalsIgnoreCase("car")) { %>
-            <% Car car = new Car(auctionItem.getListingId());%>
-            <li><h4><span class="strong">Fuel Type</span>: <%out.println(car.getFuelType());%></h4></li>
-            <li><h4><span class="strong">Mileage</span>: <%out.println(car.getMileage());%></h4></li>
-            <li><h4><span class="strong">Drive Type</span>: <%out.println(car.getDriveType());%></h4></li>
-            <li><h4><span class="strong">Body Type</span>: <%out.println(car.getBodyType());%></h4></li>
-            <li><h4><span class="strong">Transmission</span>: <%out.println(car.getTransmission());%></h4></li>
-            <%} else if (productType.equalsIgnoreCase("boat")) {%>
-            <%Boat boat = new Boat(auctionItem.getListingId());%>
-            <li><h4><span class="strong">Engine Type</span>: <%out.println(boat.getEngineType());%></h4></li>
-            <li><h4><span class="strong">Boat Type</span>: <%out.println(boat.getBoatType());%></h4></li>
-            <li><h4><span class="strong">Hull Material</span>: <%out.println(boat.getHullMaterial());%></h4></li>
-            <li><h4><span class="strong">Primary Fuel Type</span>: <%out.println(boat.getPrimaryFuelType());%></h4></li>
-            <%} else if (productType.equalsIgnoreCase("aircraft")) {%>
-            <%Aircraft aircraft = new Aircraft(auctionItem.getListingId());%>
-            <li><h4><span class="strong">Air Category</span>: <%out.println(aircraft.getAirCategory());%></h4></li>
-            <li><h4><span class="strong">Engine Hours</span>: <%out.println(aircraft.getEngineHours());%></h4></li>
-            <li><h4><span class="strong">Avionics</span>: <%out.println(aircraft.getAvionics());%></h4></li>
-            <%}%>
-        </ul>
+        <div class="flex-container">
+
+            <div class="flex-child">
+                <h3>Product Details</h3>
+                <ul>
+                    <li><h4><span class="strong">Condition</span>: <%out.println(auctionItem.getCondition());%></h4>
+                    </li>
+                    <li><h4><span class="strong">Product ID (VIN#, HIN#, Tail#, etc)</span>: <%
+                        out.println(auctionItem.getProductId());%></h4></li>
+                    <li><h4><span class="strong">Exterior Color</span>: <%out.println(auctionItem.getExteriorColor());%>
+                    </h4></li>
+                    <li><h4><span class="strong">Interior Color</span>: <%out.println(auctionItem.getInteriorColor());%>
+                    </h4></li>
+                    <li><h4><span class="strong">Capacity</span>: <%out.println(auctionItem.getCapacity());%></h4></li>
+                    <%if (productType.equalsIgnoreCase("car")) { %>
+                    <% Car car = new Car(auctionItem.getListingId());%>
+                    <li><h4><span class="strong">Fuel Type</span>: <%out.println(car.getFuelType());%></h4></li>
+                    <li><h4><span class="strong">Mileage</span>: <%out.println(car.getMileage());%></h4></li>
+                    <li><h4><span class="strong">Drive Type</span>: <%out.println(car.getDriveType());%></h4></li>
+                    <li><h4><span class="strong">Body Type</span>: <%out.println(car.getBodyType());%></h4></li>
+                    <li><h4><span class="strong">Transmission</span>: <%out.println(car.getTransmission());%></h4></li>
+                    <%} else if (productType.equalsIgnoreCase("boat")) {%>
+                    <%Boat boat = new Boat(auctionItem.getListingId());%>
+                    <li><h4><span class="strong">Engine Type</span>: <%out.println(boat.getEngineType());%></h4></li>
+                    <li><h4><span class="strong">Boat Type</span>: <%out.println(boat.getBoatType());%></h4></li>
+                    <li><h4><span class="strong">Hull Material</span>: <%out.println(boat.getHullMaterial());%></h4>
+                    </li>
+                    <li><h4><span class="strong">Primary Fuel Type</span>: <%out.println(boat.getPrimaryFuelType());%>
+                    </h4></li>
+                    <%} else if (productType.equalsIgnoreCase("aircraft")) {%>
+                    <%Aircraft aircraft = new Aircraft(auctionItem.getListingId());%>
+                    <li><h4><span class="strong">Air Category</span>: <%out.println(aircraft.getAirCategory());%></h4>
+                    </li>
+                    <li><h4><span class="strong">Engine Hours</span>: <%out.println(aircraft.getEngineHours());%></h4>
+                    </li>
+                    <li><h4><span class="strong">Avionics</span>: <%out.println(aircraft.getAvionics());%></h4></li>
+                    <%}%>
+                </ul>
+            </div>
+
+            <div class="flex-child" style="text-align: center;">
+                <form>
+                    <p>Current bid:<span style="font-weight:bold"><%out.print(currency.format(bidValue));%></span></p>
+                    <p>[<a href="bidHistory.jsp?listingId=<%out.print(auctionItem.getListingId());%>">View Bid History</a>]</p>
+                    <label for="bid">Enter your bid</label>
+                    <%if (isCompleted) {%>
+                    <input type="text" id="bid" name="bid" placeholder="Auction is Completed" disabled>
+                    <%} else {%>
+                    <input type="text" id="bid" name="bid" placeholder="Enter US 1.00 or more">
+                    <button type="submit" class="loginbtn" formaction="index.jsp">Place Bid</button>
+                    <%}%>
+
+                </form>
+                <button class="wishlistbtn" onclick="location.href='index.jsp'" type="button">Add to Wishlist</button>
+            </div>
+
+
+        </div>
         <%if (userAccount.getAccessLevel() == 2) {%>
         <button onclick="deleteAuction('<%out.print(auctionItem.getListingId());%>')" type="button"
                 class="deactivatebtn">Delete this Auction
@@ -105,6 +201,7 @@
         <%} else { %>
 
         <% } %>
+        <br>
         <div class="signin">
             <p><a href="auctionList.jsp">Go back to list of auctions</a>.</p>
         </div>

@@ -82,10 +82,10 @@
                     double earnings = rs.getDouble("Earnings");
 
                     out.print("<tr>");
-                    out.print("<td style=\"text-align: left;\">"+manufacturer+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+model+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+quantity+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+currency.format(earnings)+"</td>");
+                    out.print("<td style=\"text-align: left;\">" + manufacturer + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + model + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + quantity + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + currency.format(earnings) + "</td>");
                     out.print("</tr>");
                 } while (rs.next());
             }
@@ -108,8 +108,8 @@
                     double earnings = rs.getDouble("Earnings");
 
                     out.print("<tr>");
-                    out.print("<td style=\"text-align: left;\">"+itemType+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+currency.format(earnings)+"</td>");
+                    out.print("<td style=\"text-align: left;\">" + itemType + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + currency.format(earnings) + "</td>");
                     out.print("</tr>");
                 } while (rs.next());
             }
@@ -137,10 +137,10 @@
                     double earnings = rs.getDouble("Earnings");
 
                     out.print("<tr>");
-                    out.print("<td style=\"text-align: left;\">"+fName+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+lName+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+"<a href=\"userProfile.jsp?userProfile="+username+"\">"+username+"</a>"+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+currency.format(earnings)+"</td>");
+                    out.print("<td style=\"text-align: left;\">" + fName + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + lName + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + "<a href=\"userProfile.jsp?userProfile=" + username + "\">" + username + "</a>" + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + currency.format(earnings) + "</td>");
                     out.print("</tr>");
                 } while (rs.next());
             }
@@ -170,10 +170,10 @@
                     double earnings = rs.getDouble("Earnings");
 
                     out.print("<tr>");
-                    out.print("<td style=\"text-align: left;\">"+manufacturer+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+model+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+quantity+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+currency.format(earnings)+"</td>");
+                    out.print("<td style=\"text-align: left;\">" + manufacturer + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + model + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + quantity + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + currency.format(earnings) + "</td>");
                     out.print("</tr>");
                 } while (rs.next());
             }
@@ -203,10 +203,10 @@
                     double spendings = rs.getDouble("Total Money Spent");
 
                     out.print("<tr>");
-                    out.print("<td style=\"text-align: left;\">"+fName+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+lName+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+"<a href=\"userProfile.jsp?userProfile="+username+"\">"+username+"</a>"+"</td>");
-                    out.print("<td style=\"text-align: left;\">"+currency.format(spendings)+"</td>");
+                    out.print("<td style=\"text-align: left;\">" + fName + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + lName + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + "<a href=\"userProfile.jsp?userProfile=" + username + "\">" + username + "</a>" + "</td>");
+                    out.print("<td style=\"text-align: left;\">" + currency.format(spendings) + "</td>");
                     out.print("</tr>");
                 } while (rs.next());
             }

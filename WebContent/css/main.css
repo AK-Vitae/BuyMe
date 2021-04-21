@@ -57,6 +57,18 @@ hr {
     opacity: 0.9;
 }
 
+.wishlistbtn {
+    background-color: #008CBA;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    opacity: 0.9;
+}
+
 .mark-as-read {
     background-color: #4CAF50;
     color: white;
@@ -90,6 +102,10 @@ hr {
 
 .deactivatebtn:hover, .mark-as-unread:hover {
     background-color: #b80606;
+}
+
+.wishlistbtn:hover{
+    background-color: #025773;
 }
 
 .auction-btn-group button {
@@ -181,7 +197,7 @@ table, th, td {
     table-layout: fixed;
     border: 1px solid black;
     border-collapse: collapse;
-    width: 100%;
+    width: 50%;
 }
 
 table.center {
@@ -209,4 +225,17 @@ th {
 caption {
     font-weight: bold;
     color: black;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-child {
+    flex: 1;
+    padding: 20px;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
 }
