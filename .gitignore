@@ -1,0 +1,12 @@
+*/build/*
+*db.properties
+*.DS_Store
+.classpath
+.project
+.settings
+*.class
+*.jar
+*.war
+*.ear
+*.iml
+*.idea
