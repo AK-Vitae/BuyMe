@@ -128,6 +128,7 @@
 <%--<form action="answerProcess.jsp?qid=<%out.println(questionId);%>" method="POST">--%>
 <form>
     <div class="container">
+        <%int auctionTest = auctionItem.getListingId();%>
         <h2>Auction Status: <span class=<%out.println(auctionStatusColor);%>><%out.println(auctionStatus);%></span></h2>
         <h2>Product(<%out.print(productType);%>): <%
             out.println(auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel());%></h2>
@@ -185,7 +186,8 @@
                     <input type="text" id="bid" name="bid" placeholder="Auction is Completed" disabled>
                     <%} else {%>
                     <input type="text" id="bid" name="bid" placeholder="Enter US 1.00 or more">
-                    <button type="submit" class="loginbtn" formaction="index.jsp">Place Bid</button>
+                    <input type="hidden" id="listingId" name="listingId" value="<%out.print(auctionItem.getListingId());%>">
+                    <button type="submit" class="loginbtn" formaction="bidHistory.jsp">Place Bid</button>
                     <%}%>
 
                 </form>
