@@ -29,7 +29,12 @@
     String productId = request.getParameter("productID");
     String type = request.getParameter("type");
     double listPrice = Double.parseDouble(request.getParameter("listPrice"));
-    double minSellPrice = Double.parseDouble(request.getParameter("minSellPrice"));
+    double minSellPrice;
+    if (request.getParameter("minSellPrice") == null || request.getParameter("minSellPrice") == "") {
+        minSellPrice = listPrice;
+    } else {
+        minSellPrice = Double.parseDouble(request.getParameter("minSellPrice"));
+    }
     String exteriorColor = request.getParameter("exteriorColor");
     String interiorColor = request.getParameter("interiorColor");
     String model = request.getParameter("model");

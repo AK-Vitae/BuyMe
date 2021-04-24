@@ -158,10 +158,10 @@
         <input type="number" placeholder="Enter the year the vehicle was made in" name="year" id="year" min="1900" max="<%out.print(currentYear);%>" step="1" required>
 
         <label for="exteriorColor"><b>Exterior Color</b></label>
-        <input type="text" placeholder="Enter the exterior color of the vehicle" name="exteriorColor" id="exteriorColor">
+        <input type="text" placeholder="Enter the exterior color of the vehicle" name="exteriorColor" id="exteriorColor" required>
 
         <label for="interiorColor"><b>Interior Color</b></label>
-        <input type="text" placeholder="Enter the interior color of the vehicle" name="interiorColor" id="interiorColor">
+        <input type="text" placeholder="Enter the interior color of the vehicle" name="interiorColor" id="interiorColor" required>
 
         <label for="capacity"><b>Capacity</b></label>
         <input type="number" placeholder="Enter the vehicle's passenger capacity" name="capacity" id="capacity" min="1" step="1" required>
@@ -177,7 +177,7 @@
         <input type="number" placeholder="Enter the price you want the vehicle to be listed for" name="listPrice" id="listPrice" min="1" step="0.01" required>
 
         <label for="minSellPrice"><b>Minimum Sell Price($)</b></label>
-        <input type="number" placeholder="Enter the minimum price you are willing to sell the vehicle for" name="minSellPrice" id="minSellPrice" min="1" step="0.01" required>
+        <input type="number" placeholder="Enter the minimum price you are willing to sell the vehicle for" name="minSellPrice" id="minSellPrice" min="1" step="0.01">
 
         <label for="closingDate"><b>Closing Date and Time For the Auction</b></label>
         <br>
