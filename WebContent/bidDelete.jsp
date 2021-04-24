@@ -2,6 +2,7 @@
 <%@page import="database.Database" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="util.AuctionItem" %>
+<%@ page import="util.Bid" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,32 +24,32 @@
     try {
         //Get parameters
         conn = db.getConnection();
-        int listingId = Integer.parseInt(request.getParameter("listingId"));
-        AuctionItem auctionItem = new AuctionItem(listingId);
-
-        // Generate and Execute Query
         st = conn.createStatement();
+        int listingId = Integer.parseInt(request.getParameter("listingId"));
+        double bidValue = Double.parseDouble(request.getParameter("bidValue"));
+        AuctionItem auctionItem = new AuctionItem(listingId);
+        Bid bid = new Bid(listingId, bidValue);
 
-        int i = st.executeUpdate("DELETE FROM auctionItem WHERE listingID='" + listingId + "';");
+        int i = st.executeUpdate("DELETE FROM bid WHERE listingID='" + listingId + "' AND bidValue='" + bidValue + "';");
         if (i < 1) {
-            out.println("<div class=\"container signin\"><p>Auction was not deleted. <br> <a href=\"auctionList.jsp\">Go back to the list of auctions</a>.</p></div>");
+            out.println("<div class=\"container signin\"><p>Error: Bid was not deleted. <br> <a href=\"bidHistory.jsp?listingId="+listingId+"\">Go back to bid history</a>.</p></div>");
         } else {
             db.closeConnection(conn);
             conn = db.getConnection();
-            String topic = "Auction Deletion";
-            String message = "Auction for "+auctionItem.getAuctionItemName()+" was deleted by Customer Representative";
+            String topic = "Bid Deletion";
+            String message = "Bid on "+auctionItem.getAuctionItemName()+" was deleted by Customer Representative";
             String query = "INSERT INTO alert (user, alertTopic, alertMessage, isRead) VALUES (?, ?, ?, ?);";
             psAlert = conn.prepareStatement(query);
             // Add parameters to query
-            psAlert.setInt(1, auctionItem.getSeller());
+            psAlert.setInt(1, bid.getBidder());
             psAlert.setString(2, topic);
             psAlert.setString(3, message);
             psAlert.setBoolean(4, false);
             int result = psAlert.executeUpdate();
             if (result < 1) {
-                out.println("<div class=\"container signin\"><p>Error: Alert to inform bidder was not created but auction was deleted. <br> <a href=\"auctionList.jsp\">Go back to the list of auctions</a>.</p></div>");
+                out.println("<div class=\"container signin\"><p>Error: Alert to inform bidder was not created but bid was deleted. <br> <a href=\"bidHistory.jsp?listingId="+listingId+"\">Go back to bid history</a>.</p></div>");
             } else {
-                out.println("<div class=\"container signin\"><p>Auction deleted successfully <br> <a href=\"auctionList.jsp\">Go back to the list of auctions</a>.</p></div>");
+                response.sendRedirect("bidHistory.jsp?listingId="+listingId);
             }
         }
     } catch (SQLException se) {

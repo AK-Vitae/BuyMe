@@ -28,6 +28,9 @@
     <br/>
     <a href="login.jsp">Please Login</a>
     <%} else { %>
+    <%
+        Account userAccount = (Account) session.getAttribute("userAccount");
+    %>
     <h2>Bid History</h2>
     <%
         Database db = new Database();
@@ -49,7 +52,7 @@
                 out.print("<h2>No bids placed for this auction</h2>");
             } else {
                 out.print("<table class=\"center\">");
-                out.print("<caption style=\"text-align: center;\">Bidding History For: "+auctionItem.getAuctionItemName()+"</caption>");
+                out.print("<caption style=\"text-align: center;\">Bidding History For: " + auctionItem.getAuctionItemName() + "</caption>");
                 out.print("<tr>");
                 out.print("<th style=\"text-align: center;\">Bidder</th>");
                 out.print("<th style=\"text-align: center;\">Bid Amount</th>");
@@ -61,11 +64,16 @@
                     Bid bid = new Bid(listingId, bidValue);
                     Account bidder = new Account(bid.getBidder());
                     String username = bidder.getUsername();
+                    String hrefBidDelete = "location.href='bidDelete.jsp?listingId="+auctionItem.getListingId()+"&bidValue="+bidValue+"'";
 
                     out.print("<tr>");
                     out.print("<td style=\"text-align: left;\">" + "<a href=\"userProfile.jsp?userProfile=" + username + "\">" + username + "</a>" + "</td>");
                     out.print("<td style=\"text-align: left;\">" + currency.format(bid.getBidValue()) + "</td>");
                     out.print("<td style=\"text-align: left;\">" + bid.getBidDate() + "</td>");
+                    // Delete a bid - Customer rep functionality
+                    if (userAccount.getAccessLevel() == 2) {
+                        out.print("<td style=\"text-align: left;\">" + "<button class=\"deleteBidBtn\" onclick=\""+hrefBidDelete+"\" type=\"button\">Delete</button>" + "</td>");
+                    }
                     out.print("</tr>");
                 } while (rs.next());
                 out.print("</table>");
