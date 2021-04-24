@@ -164,6 +164,7 @@
                 <form>
                     <p>Current bid:<span style="font-weight:bold; font-size: 30px;"><%out.print(currency.format(bidValue));%></span></p>
                     <p>[<a href="bidHistory.jsp?listingId=<%out.print(auctionItem.getListingId());%>">View Bid History</a>]</p>
+                    <p>[<a href="auctionSimilarItems.jsp?listingId=<%out.print(auctionItem.getListingId());%>">View Similar Items</a>]</p>
                     <%if (userAccount.getAccessLevel() == 3 && !userAccount.getUsername().equals(userProfile.getUsername())) {%>
                         <label for="bid">Enter your bid</label>
                         <%if (isCompleted) {%>
