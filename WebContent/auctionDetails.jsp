@@ -32,17 +32,11 @@
 <%} else { %>
 <%
     Account userAccount = (Account) session.getAttribute("userAccount");
-
 %>
 <div class="marginLeft-Right">
     <%
         AuctionItem auctionItem;
-//        if (request.getParameter("listingId") == null || request.getParameter("listingId") == "") {
-//            auctionItem = new AuctionItem(1);
-//        } else {
-            auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
-//        }
-
+        auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
         ArrayList<AuctionItem> recentlyViewedAuctions;
         if ((session.getAttribute("recentlyViewedAuctions") != null)) {
             recentlyViewedAuctions = (ArrayList<AuctionItem>) session.getAttribute("recentlyViewedAuctions");
@@ -51,20 +45,14 @@
         }
         recentlyViewedAuctions.add(auctionItem);
         session.setAttribute("recentlyViewedAuctions", recentlyViewedAuctions);
-
         out.print("<h1> Listing ID: " + auctionItem.getListingId() + "</h1>");
         out.print("<h1> Auction created on " + auctionItem.getListDate() + "</h1>");
         out.print("<hr>");
         String productType = auctionItem.getType();
-
         // Finding if the auction ended or is still open
         boolean isCompleted = false;
         String auctionStatus;
-//        if (request.getParameter("status") == null || request.getParameter("status") == "") {
-//            auctionStatus = "completed";
-//        } else {
-            auctionStatus = request.getParameter("status");
-//        }
+        auctionStatus = request.getParameter("status");
         String auctionStatusColor = null;
         String closingDateHeader = null;
         if (auctionStatus.equals("completed")) {
@@ -78,7 +66,6 @@
             closingDateHeader = "Auction Closing Date: " + auctionItem.getClosingDate();
         }
         Account userProfile = new Account(auctionItem.getSeller());
-
         //Get Most Recent Bid
         Database db = new Database();
         Connection conn = null;
@@ -87,13 +74,11 @@
         Locale locale = new Locale("en", "US");
         NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
         double bidValue = 0;
-
         try {
             // Open DB Connection and get parameters
             conn = db.getConnection();
             st = conn.createStatement();
             int listingId = auctionItem.getListingId();
-
             rs = st.executeQuery("SELECT * FROM bid WHERE listingID='" + listingId + "' ORDER BY bidDate DESC LIMIT 1;");
             if (!rs.next()) {
 //                out.print("<h2>No bids placed for this auction</h2>");
@@ -125,10 +110,8 @@
         }
     %>
 </div>
-<%--<form action="answerProcess.jsp?qid=<%out.println(questionId);%>" method="POST">--%>
 <form>
     <div class="container">
-        <%int auctionTest = auctionItem.getListingId();%>
         <h2>Auction Status: <span class=<%out.println(auctionStatusColor);%>><%out.println(auctionStatus);%></span></h2>
         <h2>Product(<%out.print(productType);%>): <%
             out.println(auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel());%></h2>
@@ -179,19 +162,24 @@
 
             <div class="flex-child" style="text-align: center;">
                 <form>
-                    <p>Current bid:<span style="font-weight:bold"><%out.print(currency.format(bidValue));%></span></p>
+                    <p>Current bid:<span style="font-weight:bold; font-size: 30px;"><%out.print(currency.format(bidValue));%></span></p>
                     <p>[<a href="bidHistory.jsp?listingId=<%out.print(auctionItem.getListingId());%>">View Bid History</a>]</p>
-                    <label for="bid">Enter your bid</label>
-                    <%if (isCompleted) {%>
-                    <input type="text" id="bid" name="bid" placeholder="Auction is Completed" disabled>
-                    <%} else {%>
-                    <input type="text" id="bid" name="bid" placeholder="Enter US 1.00 or more">
-                    <input type="hidden" id="listingId" name="listingId" value="<%out.print(auctionItem.getListingId());%>">
-                    <button type="submit" class="loginbtn" formaction="bidHistory.jsp">Place Bid</button>
+                    <%if (userAccount.getAccessLevel() == 3 && !userAccount.getUsername().equals(userProfile.getUsername())) {%>
+                        <label for="bid">Enter your bid</label>
+                        <%if (isCompleted) {%>
+                        <input type="text" id="bid" name="bid" placeholder="Auction is Completed" disabled>
+                        <%} else {%>
+                        <input type="number" id="bid" name="bid" placeholder="Enter a Bid That is $<%out.print(bidValue+1.00);%> or Higher" min="<%out.print(bidValue+1.00);%>" step="0.01" required>
+                        <input type="hidden" id="status" name="status" value="<%out.print(auctionStatus);%>">
+                        <input type="hidden" id="listingId" name="listingId" value="<%out.print(auctionItem.getListingId());%>">
+                        <button type="submit" class="loginbtn" formaction="bidProcess.jsp">Place Bid</button>
+                        <%}%>
                     <%}%>
-
                 </form>
-                <button class="wishlistbtn" onclick="location.href='index.jsp'" type="button">Add to Wishlist</button>
+
+                <%if (userAccount.getAccessLevel() == 3) {%>
+                    <button class="wishlistbtn" onclick="location.href='index.jsp'" type="button">Add to Wishlist</button>
+                <%}%>
             </div>
 
 
@@ -202,7 +190,7 @@
         </button>
         <%} else { %>
 
-        <% } %>
+        <%} %>
         <br>
         <div class="signin">
             <p><a href="auctionList.jsp">Go back to list of auctions</a>.</p>
