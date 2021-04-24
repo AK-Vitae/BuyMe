@@ -7,6 +7,7 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="util.Account" %>
 <%@ page import="util.Alert" %>
+<%@ page import="util.CheckListings" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +33,7 @@
     <hr>
     <ul id="myULNoLink">
         <%
+        	CheckListings.run();
             Database db = new Database();
             ArrayList<Alert> alertList = new ArrayList<>();
             Connection conn = null;

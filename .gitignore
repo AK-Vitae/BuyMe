@@ -182,3 +182,4 @@ local.properties
 
 #database properties: each user should have their own
 /src/database/db.properties
+/build/

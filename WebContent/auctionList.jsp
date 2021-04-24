@@ -6,6 +6,7 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="java.util.Date" %>
 <%@ page import="util.Account" %>
+<%@ page import="util.CheckListings" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +43,7 @@
     <input type="text" id="myInput" onkeyup="search()" placeholder="Search for an auction" style="width:60%;">
     <ul id="myUL">
         <%
+        	CheckListings.run();
             Database db = new Database();
             ArrayList<AuctionItem> auctionList = new ArrayList<>();
             Connection conn = null;
