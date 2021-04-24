@@ -42,6 +42,7 @@
     <input type="text" id="myInput" onkeyup="search()" placeholder="Search for an auction" style="width:60%;">
     <ul id="myUL">
         <%
+            response.setIntHeader("Refresh", 10);
             Database db = new Database();
             ArrayList<AuctionItem> auctionList = new ArrayList<>();
             Connection conn = null;
