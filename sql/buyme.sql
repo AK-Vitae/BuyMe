@@ -68,7 +68,7 @@ CREATE TABLE `auctionItem`
     `interiorColor` 	VARCHAR(25) DEFAULT NULL,
     `model`		    	VARCHAR(50) DEFAULT NULL,
     `manufacturer`  	VARCHAR(50) DEFAULT NULL,
-    `condition`  		VARCHAR(50) DEFAULT NULL,
+    `condition`  		VARCHAR(5) DEFAULT NULL,
     `capacity` 			INT DEFAULT NULL,
     `closingDate`      	DATETIME DEFAULT NULL,
     `year`				INT DEFAULT NULL,
@@ -119,7 +119,7 @@ CREATE TABLE `aircraft`
 -- insert for car
 LOCK TABLES auctionItem WRITE;
 INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser) VALUES
-('acc', 'Car', 12000.00, 18000.00, 'white', 'black', 'Gappu', 'Volkswagon', 'used', 5, '2022-05-01 12:30:00', 2015, '2021-04-11 16:30:00', 6, 5);
+('acc', 'Car', 12000.00, 18000.00, 'white', 'black', 'Gappu', 'Volkswagon', 'used', 5, '2022-05-01 12:30:00', 2015, '2021-04-11 16:30:00', 5, 6);
 UNLOCK TABLES;
 
 LOCK TABLES auctionItem WRITE;
@@ -219,6 +219,19 @@ INSERT INTO alert (`user`, alertTopic, alertMessage, isRead) VALUES
 (6, 'Auction Won', 'Congrats you won the auction', FALSE);
 UNLOCK TABLES;
 SELECT * FROM alert;
+
+DROP TABLE IF EXISTS `wishlist`;
+CREATE TABLE `wishlist`
+(
+    `user`         INT,
+    `model`        VARCHAR(50),
+    `manufacturer` VARCHAR(50),
+    `condition`    VARCHAR(5),
+    `maxPrice`     DECIMAL(20, 2),
+    PRIMARY KEY (`user`, `model`, `manufacturer`, `condition`, `maxPrice`),
+    FOREIGN KEY(`user`) REFERENCES account(`account_number`) ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
 -- Transaction History
 -- SELECT * FROM auctionItem WHERE seller = 7; -- All auctions created by a user; Use a if condition to check if the auction ended without a winner
 -- SELECT * FROM auctionItem WHERE purchaser = 7; -- All auctions won by user
