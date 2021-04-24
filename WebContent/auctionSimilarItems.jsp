@@ -66,6 +66,9 @@
                     } else {
                         do {
                             Account auctionItemSeller = new Account(auctionItem.getSeller());
+                            //new listingId
+                            int newListingID = rs.getInt("listingId");
+                            auctionItem = new AuctionItem(newListingID);
 
                             String closingDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(rs.getTimestamp("closingDate"));
                             Date date = new Date();
