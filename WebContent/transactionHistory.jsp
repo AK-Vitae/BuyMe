@@ -54,7 +54,7 @@
                     st = conn.createStatement();
 
                     // Create query for login validation
-                    rs = st.executeQuery("SELECT * FROM auctionItem WHERE seller = " + accountNumber + ";");
+                    rs = st.executeQuery("SELECT * FROM auctionItem WHERE seller = " + accountNumber + " ORDER BY auctionItem.listDate DESC;");
                     if (!rs.next()) {
                         out.print("<h2>No auctions started by this user</h2>");
                     } else {

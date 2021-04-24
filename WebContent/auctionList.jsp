@@ -53,7 +53,7 @@
                 st = conn.createStatement();
 
                 // Create query for login validation
-                rs = st.executeQuery("SELECT * FROM auctionItem;");
+                rs = st.executeQuery("SELECT * FROM auctionItem ORDER BY auctionItem.listDate DESC;");
                 if (!rs.next()) {
                     out.print("<h2>No auctions started</h2>");
                 } else {
