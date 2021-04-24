@@ -191,8 +191,7 @@
             cal.add(Calendar.MINUTE, 2); // Min auction length is 2 minutes
             String time = timeFormat.format(cal.getTime());
         %>
-        <input type="date" name="closingDate" id="closingDate" min="<%out.print(date);%>" required>
-        <input type="time" name="closingTime" id="closingTime" min="<%out.print(time);%>" required>
+        <input type="datetime-local" name="closingDate" id="closingDate" min="<%out.print(date);%>T<%out.print(time);%>" required>
         <br>
         <br>
 
