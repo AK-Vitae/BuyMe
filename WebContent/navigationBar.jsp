@@ -39,6 +39,7 @@
         </ul>
         <% if ((session.getAttribute("user") != null)) { %>
         <%
+            Account userAccount = (Account) session.getAttribute("userAccount");
             Database dbAlert = new Database();
             int alertCount = 0;
             Connection connAlert = null;
@@ -88,6 +89,10 @@
         %>
 
         <ul class="nav navbar-nav navbar-right">
+            <%if (userAccount.getAccessLevel() == 3) { %>
+            <li>
+                <a class="nav-link" href="wishlist.jsp">Wishlist</a>
+            </li>
             <li class="nav-item">
                 <%if (alertCount > 0) { %>
                 <span class="badge badge-pill badge-primary"
@@ -99,6 +104,7 @@
                 <%}%>
                 <a class="nav-link" href="alertList.jsp">Alerts</a>
             </li>
+            <%}%>
             <li>
                 <a class="nav-link" href="logout.jsp">Logout</a>
             </li>
