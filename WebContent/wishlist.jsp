@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@page import="database.Database" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="java.util.Date" %>
 <%@ page import="util.*" %>
+<%@ page import="java.util.*" %>
+<%@ page import="java.text.NumberFormat" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +28,7 @@
     <%} else { %>
     <h1>Wishlist</h1>
     <a href="wishlistAdd.jsp">
-        <button>Add an Item to Your Wishlist</button>
+        <button class="loginbtn">Add an Item to Your Wishlist</button>
     </a>
     <hr>
     <ul id="myULNoLink">
@@ -38,6 +38,8 @@
             Connection conn = null;
             Statement st = null;
             ResultSet rs = null;
+            Locale locale = new Locale("en", "US");
+            NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
             try {
                 // Open DB Connection and get parameters
                 conn = db.getConnection();
@@ -75,7 +77,7 @@
                                     + "<span class=\"close-button\">&times;</span>"
                                     + "</a>"
                                     + "<br>Product: " + wishlistItem.getWishlistItemName()
-                                    + "<br>Maximum Price: " + wishlistItem.getMaxPrice()
+                                    + "<br>Maximum Price: " + currency.format(wishlistItem.getMaxPrice())
                                     + "</li>");
                             wishArrayList.add(wishlistItem);
                         }

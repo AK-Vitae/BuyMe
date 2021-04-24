@@ -2,6 +2,7 @@
 <%@page import="util.Account" %>
 <%@page import="database.Database" %>
 <%@ page import="java.sql.*" %>
+<%@ page import="util.AuctionItem" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,6 +20,11 @@
     Database db = new Database();
     Connection conn = null;
     PreparedStatement ps = null;
+    PreparedStatement psAlert = null;
+    PreparedStatement psWishlist = null;
+    PreparedStatement psWishlistIsAvailable = null;
+    ResultSet rsWishlist = null;
+
     Account userAccount = (Account) session.getAttribute("userAccount");
     String productId = request.getParameter("productID");
     String type = request.getParameter("type");
@@ -124,7 +130,47 @@
         if (resultAuction < 1) {
             out.println("<div class=\"container signin\"><p>There was a problem creating your auction <br><a href=\"auctionList.jsp\">Try Again</a>.</p> </div>");
         } else {
-            out.println("<div class=\"container signin\"><p>Your auction was created <br><a href=\" auctionList.jsp\">Go back to the list of auctions</a>.</p> </div>");
+            db.closeConnection(conn);
+            conn = db.getConnection();
+            String wishlistQuery = "SELECT * FROM  wishlist WHERE model=? AND manufacturer=? AND `condition`=? AND maxPrice>=?;";
+            psWishlist = conn.prepareStatement(wishlistQuery);
+            psWishlist.setString(1, model);
+            psWishlist.setString(2, manufacturer);
+            psWishlist.setString(3, condition);
+            psWishlist.setDouble(4, listPrice);
+            rsWishlist = psWishlist.executeQuery();
+            if (!rsWishlist.next()) {
+                response.sendRedirect("auctionList.jsp");
+            } else {
+                do {
+                    int user = rsWishlist.getInt("user");
+                    double maxPrice = rsWishlist.getDouble("maxPrice");
+                    String topic = "Wishlist Item";
+                    String message = manufacturer+" "+model+" has become available";
+                    String queryAlert = "INSERT INTO alert (user, alertTopic, alertMessage, isRead) VALUES (?, ?, ?, ?);";
+                    psAlert = conn.prepareStatement(queryAlert);
+                    // Add parameters to query
+                    psAlert.setInt(1, user);
+                    psAlert.setString(2, topic);
+                    psAlert.setString(3, message);
+                    psAlert.setBoolean(4, false);
+                    int result = psAlert.executeUpdate();
+                    if (result < 1) {
+                        out.println("<div class=\"container signin\"><p>Error: Wishlist alert to inform users was not created but auctionItem was created. <br> <a href=\"auctionList.jsp\">Go back to list of auctions</a>.</p></div>");
+                    }
+
+                    String queryWishlistIsAvailable = "UPDATE wishlist SET isAvailable = 1 WHERE user=? AND model=? AND manufacturer=? AND `condition`=? AND maxPrice=?;";
+                    psWishlistIsAvailable = conn.prepareStatement(queryWishlistIsAvailable);
+                    psWishlistIsAvailable.setInt(1, user);
+                    psWishlistIsAvailable.setString(2, model);
+                    psWishlistIsAvailable.setString(3, manufacturer);
+                    psWishlistIsAvailable.setString(4, condition);
+                    psWishlistIsAvailable.setDouble(5, maxPrice);
+                    int resultIsAvailable = psWishlistIsAvailable.executeUpdate();
+
+                    response.sendRedirect("auctionList.jsp");
+                } while (rsWishlist.next());
+            }
         }
     } catch (SQLException se) {
         out.print("<p>Error connecting to MYSQL server.</p>");
@@ -135,6 +181,21 @@
         // Close
         try {
             if (ps != null) ps.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (psAlert != null) psAlert.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (psWishlist != null) psWishlist.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            if (rsWishlist != null) rsWishlist.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

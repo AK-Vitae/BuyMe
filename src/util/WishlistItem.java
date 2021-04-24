@@ -114,6 +114,6 @@ public class WishlistItem {
     }
 
     public String getWishlistItemName() {
-        return this.manufacturer + " " + this.model;
+        return this.getCondition() + " " + this.manufacturer + " " + this.model;
     }
 }
