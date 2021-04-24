@@ -113,7 +113,7 @@
             e.printStackTrace();
         }
         try {
-            if (conn2 != null) db.closeConnection(conn);
+            if (conn2 != null) db.closeConnection(conn2);
         } catch (Exception e) {
             e.printStackTrace();
         }
