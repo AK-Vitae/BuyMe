@@ -169,16 +169,16 @@
                         <%if (isCompleted) {%>
                         <input type="text" id="bid" name="bid" placeholder="Auction is Completed" disabled>
                         <%} else {%>
-                        <input type="number" id="bid" name="bid" placeholder="Enter a Bid That is $<%out.print(bidValue+1.00);%> or Higher" min="<%out.print(bidValue+1.00);%>" step="0.01" required>
+                        <input type="number" id="bid" name="bid" placeholder="Enter a Bid That is <%out.print(currency.format(bidValue+1.00));%> or Higher" min="<%out.print(bidValue+1.00);%>" step="0.01" required>
                         <input type="hidden" id="status" name="status" value="<%out.print(auctionStatus);%>">
                         <input type="hidden" id="listingId" name="listingId" value="<%out.print(auctionItem.getListingId());%>">
-                        <button type="submit" class="loginbtn" formaction="bidProcess.jsp">Place Bid</button>
+                        <button type="submit" class="loginbtn" formaction="bidPlaceProcess.jsp">Place Bid</button>
                         <%}%>
                     <%}%>
                 </form>
 
                 <%if (userAccount.getAccessLevel() == 3) {%>
-                    <button class="wishlistbtn" onclick="location.href='index.jsp'" type="button">Add to Wishlist</button>
+                    <button class="wishlistbtn" onclick="location.href='wishlistAdd.jsp?process=auctionAdd&listingId=<%out.print(auctionItem.getListingId());%>'" type="button">Add to Wishlist</button>
                 <%}%>
             </div>
 

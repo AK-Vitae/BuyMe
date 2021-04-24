@@ -32,7 +32,7 @@
     <h2>Admin Functions</h2>
     <a href='createCustomerRepAccount.jsp'>Create a Customer Representative Account</a>
     <br>
-    <a href='salesReport.jsp'>Generate Sales Report</a>
+    <a href='salesReport.jsp'>Generate Sales Reports</a>
     <%} else if (userAccount.getAccessLevel() == 2) {%>
     <h2>Customer Representative Functions</h2>
     <a href='questionsAndAnswers.jsp'>Answer Customers' Questions</a>
@@ -42,8 +42,8 @@
     <%} else if (userAccount.getAccessLevel() == 3) {%>
     <a href='transactionHistory.jsp?accountNumber=<%out.print(accountNumber);%>'>Transaction History</a>
     <br>
-    <a href='editAccountInformation.jsp'>Edit Account Information</a>
-    <br>
+<%--    <a href='editAccountInformation.jsp'>Edit Account Information</a>--%>
+<%--    <br>--%>
     <a href='deactivateAccount.jsp'>Deactivate Account</a>
     <br>
     <% } %>

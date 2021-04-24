@@ -30,7 +30,8 @@
     String manufacturer = request.getParameter("manufacturer");
     String condition = request.getParameter("condition");
     int capacity = Integer.parseInt(request.getParameter("capacity"));
-    String closingDate = request.getParameter("closingDate")+" "+request.getParameter("closingTime");
+    String closingDate = request.getParameter("closingDate");
+    closingDate = closingDate.substring(0,10)+" "+closingDate.substring(11);
     int year = Integer.parseInt(request.getParameter("year"));
     int seller = userAccount.getAccountNumber();
 

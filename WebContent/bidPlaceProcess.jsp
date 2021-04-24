@@ -73,15 +73,16 @@
     }
     try {
         conn2 = db.getConnection();
-        if (maxBid >= bidValue) {
-%>
+        if (maxBid >= bidValue) {%>
 <form>
     <div class="signin">
-        <p>Bid entered is too low <a href="auctionDetails.jsp?status=open&listingId=<%out.print(listingID);%>">Go back to list of auctions</a>.
+        <p>Bid entered is too low <a href="auctionDetails.jsp?status=open&listingId=<%out.print(listingID);%>">Go back
+            to list of auctions</a>.
         </p>
     </div>
 </form>
-<%} else {
+<%
+} else {
     String query2 = "INSERT INTO bid (listingID, bidder, bidValue, bidDate) VALUES (?, ?, ?, now());";
     ps = conn2.prepareStatement(query2);
     ps.setInt(1, listingID);
@@ -90,7 +91,7 @@
     int resultBid = ps.executeUpdate();
     if (resultBid < 1) {
         out.println("failed");
-        out.println("<div class=\"container signin\"><p>There was a problem submitting your bid<br><a href=\"auctionList.jsp\">Try Again</a>.</p> </div>");
+        out.println("<div class=\"container signin\"><p>There was a problem submitting your bid<br><a href=\"auctionList.jsp\">Go back to the list of auctions</a>.</p> </div>");
     } else {
         out.println("<div class=\"container signin\"><p>Your Bid of " + currency.format(bidValue) + " has been submitted <br><a href=\" auctionList.jsp\">Go back to the list of auctions</a>.</p> </div>");
 %>

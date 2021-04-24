@@ -73,7 +73,7 @@
         %>
     </ul>
     <%} else {%>
-    <a href="auctionList.jsp">Check out list of auctions</a>
+    <a href="auctionList.jsp">Check out the list of auctions</a>
     <br>
     <%}%>
 </div>

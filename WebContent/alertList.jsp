@@ -28,6 +28,8 @@
     <br/>
     <a href="login.jsp">Please Login</a>
     <%} else { %>
+    <h1>Alerts</h1>
+    <hr>
     <ul id="myULNoLink">
         <%
             Database db = new Database();
@@ -43,7 +45,6 @@
                 // Create query for login validation
                 rs = st.executeQuery("SELECT * FROM alert ORDER BY alert.alertID DESC;");
                 if (!rs.next()) {
-                    out.print("<h2>No alerts set</h2>");
                 } else {
                     do {
                         int alertID = rs.getInt("alertID");
@@ -87,7 +88,7 @@
                     } while (rs.next());
                 }
                 if (alertList.isEmpty()) {
-                    out.print("<h2>No alerts set</h2>");
+                    out.print("<h2>All caught up!</h2>");
                 }
                 session.setAttribute("alertList", alertList);
             } catch (SQLException se) {
