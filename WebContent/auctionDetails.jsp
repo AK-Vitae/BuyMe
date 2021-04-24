@@ -37,14 +37,6 @@
     <%
         AuctionItem auctionItem;
         auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
-        ArrayList<AuctionItem> recentlyViewedAuctions;
-        if ((session.getAttribute("recentlyViewedAuctions") != null)) {
-            recentlyViewedAuctions = (ArrayList<AuctionItem>) session.getAttribute("recentlyViewedAuctions");
-        } else {
-            recentlyViewedAuctions = new ArrayList<>();
-        }
-        recentlyViewedAuctions.add(auctionItem);
-        session.setAttribute("recentlyViewedAuctions", recentlyViewedAuctions);
         out.print("<h1> Listing ID: " + auctionItem.getListingId() + "</h1>");
         out.print("<h1> Auction created on " + auctionItem.getListDate() + "</h1>");
         out.print("<hr>");
