@@ -29,7 +29,7 @@
             if (i < 1) {
                 out.println("<div class=\"container signin\"><p>Error: Alert was not deleted. <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
             } else {
-                out.println("<div class=\"container signin\"><p>Alert was deleted <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
+                response.sendRedirect("alertList.jsp");
             }
             return;
         }
@@ -42,14 +42,16 @@
             if (i < 1) {
                 out.println("<div class=\"container signin\"><p>Error: Alert was not marked as read. <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
             } else {
-                out.println("<div class=\"container signin\"><p>Alert was marked as read <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
+                //out.println("<div class=\"container signin\"><p>Alert was marked as read <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
+                response.sendRedirect("alertList.jsp");
             }
         } else {
             int i = st.executeUpdate("UPDATE alert SET isRead = 0 WHERE alertID='" + alertID + "';");
             if (i < 1) {
                 out.println("<div class=\"container signin\"><p>Error: Alert was not marked as unread. <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
             } else {
-                out.println("<div class=\"container signin\"><p>Alert was marked as unread <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
+                //out.println("<div class=\"container signin\"><p>Alert was marked as unread <br> <a href=\"alertList.jsp\">Go back to the list of alerts</a>.</p></div>");
+                response.sendRedirect("alertList.jsp");
             }
         }
     } catch (SQLException se) {

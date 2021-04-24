@@ -41,7 +41,7 @@
                 st = conn.createStatement();
 
                 // Create query for login validation
-                rs = st.executeQuery("SELECT * FROM alert;");
+                rs = st.executeQuery("SELECT * FROM alert ORDER BY alert.alertID DESC;");
                 if (!rs.next()) {
                     out.print("<h2>No alerts set</h2>");
                 } else {
