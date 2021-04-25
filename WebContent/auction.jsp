@@ -144,7 +144,7 @@
         <%}%>
 
         <label for="model"><b>Model (Letters and Numbers only)</b></label>
-        <input type="text" placeholder="Enter the model name" name="model" id="model" pattern="[A-Za-z0-9]" required>
+        <input type="text" placeholder="Enter the model name" name="model" id="model" pattern="[a-zA-Z0-9]+" required>
 
         <label for="condition"><b>New/Used</b></label>
         <select name="condition" id="condition" required>
