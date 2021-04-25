@@ -34,7 +34,7 @@
 
     PreparedStatement psC = null;
     AuctionItem auctionItem = new AuctionItem(Integer.parseInt(request.getParameter("listingId")));
-    ArrayList<Integer> bidderList = new ArrayList<Integer>();
+    ArrayList<Integer> bidderList = new ArrayList<>();
     int maxBidder = -1;
     int listingId = auctionItem.getListingId();
     int finalResult = 1;

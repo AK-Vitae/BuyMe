@@ -80,7 +80,7 @@
     try {
         conn2 = db.getConnection();
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
         String strDate = dateFormat.format(date);
         if (maxBid >= bidValue) {
 %>

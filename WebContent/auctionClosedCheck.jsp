@@ -10,6 +10,7 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.Locale" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -105,7 +106,10 @@
                                 }
                             }
                             try {
-                                String message1 = "Congrats! You won the auction listingID: " + listingID + " with your bid of $" + finalBid + "!";
+                                Locale locale = new Locale("en", "US");
+                                NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
+
+                                String message1 = "Congrats! You won the auction listingID: " + listingID + " with your bid of " + currency.format(finalBid) + "!";
                                 connect3 = dbCAC4.getConnection();
                                 String query = "INSERT INTO alert (user, alertTopic, alertMessage, isRead) VALUES (?, ?, ?, ?);";
                                 prepStat = connect3.prepareStatement(query);

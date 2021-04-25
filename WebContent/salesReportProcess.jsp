@@ -126,7 +126,7 @@
             rs = st.executeQuery("SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.soldPrice) AS Earnings " +
                     "FROM account a INNER JOIN auctionItem aI " +
                     "ON a.account_number = aI.seller " +
-                    "GROUP BY aI.seller;");
+                    "GROUP BY aI.seller ORDER BY `Last Name`;");
             if (!rs.next()) {
                 out.print("<tr> <td  colspan=\"4\" style=\"text-align:center\">No earnings recorded</td> </tr>");
             } else {
