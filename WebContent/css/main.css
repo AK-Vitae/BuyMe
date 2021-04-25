@@ -69,6 +69,18 @@ hr {
     opacity: 0.9;
 }
 
+.autobidbtn {
+    background-color: #ffa500;
+    color: white;
+    padding: 16px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 100%;
+    opacity: 0.9;
+}
+
 .mark-as-read {
     background-color: #4CAF50;
     color: white;
@@ -106,6 +118,10 @@ hr {
 
 .wishlistbtn:hover {
     background-color: #025773;
+}
+
+.autobidbtn:hover {
+    background-color: #ff8c00;
 }
 
 .auction-btn-group button {

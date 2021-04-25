@@ -131,11 +131,11 @@
             conn = db.getConnection();
             st = conn.createStatement();
             int listingId = auctionItem.getListingId();
-            rs = st.executeQuery("SELECT * FROM bid WHERE listingID='" + listingId + "' ORDER BY bidDate DESC LIMIT 1;");
+            rs = st.executeQuery("SELECT MAX(bidValue) FROM bid WHERE listingID=" + listingId + ";");
             if (!rs.next()) {
 //                out.print("<h2>No bids placed for this auction</h2>");
             } else {
-                bidValue = rs.getDouble("bidValue");
+                bidValue = rs.getDouble("MAX(bidValue)");
             }
         } catch (SQLException se) {
             out.print("<p>Error connecting to MYSQL server.</p>");
@@ -243,17 +243,20 @@
                     <%if (isCompleted) {%>
                     <input type="text" id="bid" name="bid" placeholder="Auction is Completed" disabled>
                     <%} else {%>
-                    <input type="number" id="bid" name="bid"
-                           placeholder="Enter a Bid That is <%out.print(currency.format(displayPrice+1.00));%> or Higher"
-                           min="<%out.print(displayPrice+1.00);%>" step="0.01" required>
+                    <input type="number" id="bid" name="bid" placeholder="Enter a Bid That is <%out.print(currency.format(displayPrice+1.00));%> or Higher" min="<%out.print(displayPrice+1.00);%>" step="0.01" required>
                     <input type="hidden" id="status" name="status" value="<%out.print(auctionStatus);%>">
-                    <input type="hidden" id="listingId" name="listingId"
-                           value="<%out.print(auctionItem.getListingId());%>">
+                    <input type="hidden" id="listingId" name="listingId" value="<%out.print(auctionItem.getListingId());%>">
                     <button type="submit" class="loginbtn" formaction="bidPlaceProcess.jsp">Place Bid</button>
                     <%}%>
                     <%}%>
                 </form>
-
+                <%if (userAccount.getAccessLevel() == 3 && !userAccount.getUsername().equals(userProfile.getUsername()) && !isCompleted) {%>
+                <form method="post">
+                    <input type="hidden" id="listingId2" name="listingId2" value="<%out.print(auctionItem.getListingId());%>">
+                    <input type="hidden" id="bidValue" name="bidValue" value="<%out.println(displayPrice);%>">
+                    <button type="submit"  class="autobidbtn" formaction="autobidPlace.jsp">Place Auto-bid</button>
+                </form>
+                <%}%>
                 <%if (userAccount.getAccessLevel() == 3) {%>
                 <button class="wishlistbtn"
                         onclick="location.href='wishlistAdd.jsp?process=auctionAdd&listingId=<%out.print(auctionItem.getListingId());%>'"
