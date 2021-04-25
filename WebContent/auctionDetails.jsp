@@ -43,6 +43,8 @@
         Connection connAuctionItem = null;
         Statement stAuctionItem = null;
         ResultSet rsAuctionItem = null;
+        String auctionSoldStatus = null;
+        int purchaser;
         try {
             // Open DB Connection and get parameters
             connAuctionItem = dbAuctionItem.getConnection();
@@ -54,6 +56,16 @@
                 out.print("<h2>No auctions started</h2>");
             } else {
                 do {
+                    double soldPrice = rsAuctionItem.getDouble("soldPrice");
+                    if (rsAuctionItem.wasNull()) {
+                        auctionSoldStatus = "No Winner";
+                    } else {
+                        purchaser = rsAuctionItem.getInt("purchaser");
+                        Account auctionWinner = new Account(purchaser);
+
+                        auctionSoldStatus = "<a href=\"userProfile.jsp?userProfile="+auctionWinner.getUsername()+"\">"+auctionWinner.getUsername()+"</a>";
+                    }
+
                     String closingDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(rsAuctionItem.getTimestamp("closingDate"));
                     Date date = new Date();
                     String currentDate = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss").format(date);
@@ -92,8 +104,9 @@
         // Finding if the auction ended or is still open
         String auctionStatus;
         // auctionStatus = request.getParameter("status");
-        String auctionStatusColor = null;
-        String closingDateHeader = null;
+        String auctionStatusColor;
+        String closingDateHeader;
+
         if (isCompleted) {
             auctionStatus = "Auction Completed";
             auctionStatusColor = "font-red";
@@ -152,6 +165,9 @@
 <form>
     <div class="container">
         <h2>Auction Status: <span class=<%out.println(auctionStatusColor);%>><%out.println(auctionStatus);%></span></h2>
+        <%if (isCompleted) {%>
+        <h2>Winner: <%out.print(auctionSoldStatus);%></h2>
+        <%}%>
         <h2>Product(<%out.print(productType);%>): <%
             out.println(auctionItem.getYear() + " " + auctionItem.getManufacturer() + " " + auctionItem.getModel());%></h2>
         <h2><%out.println(closingDateHeader);%></h2>
@@ -201,6 +217,10 @@
 
             <div class="flex-child" style="text-align: center;">
                 <form>
+                    <%if (userAccount.getAccountNumber()==auctionItem.getSeller()) {%>
+                    <p style="font-size: 20px;">Minimum Sell Price:<span style="font-weight:bold; font-size: 30px;"><%
+                        out.print(currency.format(auctionItem.getMinSellPrice()));%></span></p>
+                    <%}%>
                     <%
                         if (bidValue == 0) {
                             displayPrice = auctionItem.getListPrice();
