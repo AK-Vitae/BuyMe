@@ -28,10 +28,12 @@
     <br/>
     <a href="login.jsp">Please Login</a>
     <%} else { %>
+    <%@include file="auctionClosedCheck.jsp" %>
     <h1>Alerts</h1>
     <hr>
     <ul id="myULNoLink">
         <%
+            response.setIntHeader("Refresh", 20);
             Database db = new Database();
             ArrayList<Alert> alertList = new ArrayList<>();
             Connection conn = null;

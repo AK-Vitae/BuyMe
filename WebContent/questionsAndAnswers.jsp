@@ -25,13 +25,19 @@
     <br/>
     <a href="login.jsp">Please Login</a>
     <%} else { %>
+    <%@include file="auctionClosedCheck.jsp" %>
     <h2>Question and Answers</h2>
+    <%
+        Account userAccount = (Account) session.getAttribute("userAccount");
+        if (userAccount.getAccessLevel() == 3) {%>
     <a href="question.jsp">
         <button class="loginbtn">Ask a New Question</button>
     </a>
+    <%}%>
     <input type="text" id="myInput" onkeyup="search()" placeholder="Search for a question">
     <ul id="myUL">
         <%
+            response.setIntHeader("Refresh", 20);
             Database db = new Database();
             ArrayList<QuestionAnswer> qAList = new ArrayList<>();
             Connection conn = null;

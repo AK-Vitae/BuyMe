@@ -26,7 +26,6 @@
 
 <body>
 <%
-    AuctionItem auctionItemChecked;
     Database dbCAC1 = new Database();
     Database dbCAC2 = new Database();
     Database dbCAC3 = new Database();
@@ -39,51 +38,43 @@
     Statement statement2 = null;
     Connection connect3 = null;
     PreparedStatement prepStat = null;
+
+    int bidderID;
     double finalBid;
     int listingID;
     double minPrice;
+
     String aTopic = "Auction Won";
+
     boolean read = false;
+
+    String status = "completed";
+    //selects items whose closing dates have passed
     try {
         connect = dbCAC1.getConnection();
         statement1 = connect.createStatement();
-        Date date = new Date();
-        out.print(date);
-        out.println("in Try1");
-
         resSet = statement1.executeQuery("SELECT * FROM auctionItem WHERE purchaser IS NULL and closingDate <= NOW();");
-        out.println("sent query");
         if (!resSet.next()) {
-            //this means that no items are closed and don't have a purchaser
-            //out.print("<h2>No bids placed for this auction</h2>");
         } else {
             int x = 0;
             do {
                 x++;
-                out.println("model:  " + resSet.getString("model"));
                 listingID = resSet.getInt("listingID");
                 minPrice = resSet.getDouble("minSellPrice");
-                //out.println(" MINBID:"+ minPrice+"                      ");
+
                 try {
-                    out.println("in Try2--");
                     connect2 = dbCAC2.getConnection();
                     statement2 = connect2.createStatement();
-                    out.println("connected	");
-
-                    resSet2 = statement2.executeQuery("SELECT MAX(bidValue), bidder FROM bid WHERE listingID =" + listingID + ";");
-                    out.println("submited rs2	");
+                    //finds highest bidder for auction
+                    resSet2 = statement2.executeQuery("SELECT * FROM bid WHERE listingID =" + listingID + " and bidValue = (Select MAX(bidValue) from bid where listingID = " + listingID + ")");
                     if (resSet2.next()) {
-                        finalBid = resSet2.getDouble("MAX(bidValue)");
-                        int bidderID = resSet2.getInt("bidder");
-                        out.println("final bid: " + finalBid + "bidderID: " + bidderID);
-                        out.println("    minbid" + minPrice);
+                        finalBid = resSet2.getDouble("bidValue");
+                        bidderID = resSet2.getInt("bidder");
 
                         if (finalBid >= minPrice) {
-                            out.println("bid>minprice	");
+                            //updates auctionItem and alert tables if minimumprice reached
                             try {
-                                out.println("in Try3----");
                                 connect3 = dbCAC3.getConnection();
-                                out.println("connected	");
                                 String query = "UPDATE auctionItem SET soldPrice = ?, purchaser = ? WHERE listingID = ?;";
                                 prepStat = connect3.prepareStatement(query);
                                 prepStat.setDouble(1, finalBid);
@@ -113,20 +104,16 @@
                                     e.printStackTrace();
                                 }
                             }
-// ------------------------------------------------------------------------------------------------------------------------------------------------------
                             try {
-                                auctionItemChecked = new AuctionItem(listingID);
-                                out.println("in Try4-----");
-                                String message1 = "Congrats! You won the auction for the " + auctionItemChecked.getAuctionItemName() + " with your bid of $" + finalBid + "!";
+                                String message1 = "Congrats! You won the auction listingID: " + listingID + " with your bid of $" + finalBid + "!";
                                 connect3 = dbCAC4.getConnection();
-                                out.println("connected	");
                                 String query = "INSERT INTO alert (user, alertTopic, alertMessage, isRead) VALUES (?, ?, ?, ?);";
                                 prepStat = connect3.prepareStatement(query);
 
                                 prepStat.setInt(1, bidderID);
                                 prepStat.setString(2, aTopic);
                                 prepStat.setString(3, message1);
-                                prepStat.setBoolean(4, false);
+                                prepStat.setBoolean(4, read);
 
 
                                 int result = prepStat.executeUpdate();
@@ -152,11 +139,8 @@
                                     e.printStackTrace();
                                 }
                             }
-
-// --------------------------------------------------------------------------------------------------------------------------
-
                         } else {
-                            out.println("highest bid smaller than minumum sell price");
+                            //indicates highest bid smaller than minumum sell price
                         }
                     }
                 } catch (SQLException se) {
@@ -183,10 +167,7 @@
                     }
                 }
 
-// -------------------------------------------------------------------------------------------------
-                out.println("       END OF WHILE       ");
             } while (resSet.next());
-            out.println("       OUT OF WHILE       ");
         }
 
     } catch (SQLException se) {
@@ -212,8 +193,6 @@
             e.printStackTrace();
         }
     }
-    out.println("Auctions Closings Checked");
-
 
 %>
 </body>

@@ -26,6 +26,7 @@
     <br/>
     <a href="login.jsp">Please Login</a>
     <%} else { %>
+    <%@include file="auctionClosedCheck.jsp" %>
     <h1>Wishlist</h1>
     <a href="wishlistAdd.jsp">
         <button class="loginbtn">Add an Item to Your Wishlist</button>
@@ -33,6 +34,7 @@
     <hr>
     <ul id="myULNoLink">
         <%
+            response.setIntHeader("Refresh", 20);
             Database db = new Database();
             ArrayList<WishlistItem> wishArrayList = new ArrayList<>();
             Connection conn = null;

@@ -27,7 +27,9 @@
 <br/>
 <a href="login.jsp">Please Login</a>
 <%} else { %>
+<%@include file="auctionClosedCheck.jsp" %>
 <%
+    response.setIntHeader("Refresh", 20);
     Database db = new Database();
     int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
     Account userAccount = new Account(accountNumber);

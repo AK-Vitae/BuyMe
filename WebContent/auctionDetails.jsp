@@ -30,6 +30,7 @@
     <a href="login.jsp">Please Login</a>
 </div>
 <%} else { %>
+<%@include file="auctionClosedCheck.jsp" %>
 <%
     Account userAccount = (Account) session.getAttribute("userAccount");
 %>

@@ -194,7 +194,7 @@
                     "ORDER BY `Total Money Spent` " +
                     "DESC LIMIT 5;");
             if (!rs.next()) {
-                out.print("<tr> <td  colspan=\"4\" style=\"text-align:center\">No earnings recorded</td> </tr>");
+                out.print("<tr> <td  colspan=\"4\" style=\"text-align:center\">No expenditures recorded</td> </tr>");
             } else {
                 do {
                     String fName = rs.getString("First Name");

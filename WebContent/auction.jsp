@@ -23,6 +23,7 @@
     <a href="login.jsp">Please Login</a>
 </div>
 <%} else { %>
+<%@include file="auctionClosedCheck.jsp" %>
 <%
     String auctionType = request.getParameter("type");
     auctionType = auctionType.substring(0, 1).toUpperCase() + auctionType.substring(1);

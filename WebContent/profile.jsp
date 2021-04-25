@@ -20,7 +20,9 @@
     <a href="login.jsp">Please Login</a>
 </div>
 <%} else { %>
+<%@include file="auctionClosedCheck.jsp" %>
 <%
+    response.setIntHeader("Refresh", 20);
     Account userAccount = (Account) session.getAttribute("userAccount");
     int accountNumber = userAccount.getAccountNumber();
 %>

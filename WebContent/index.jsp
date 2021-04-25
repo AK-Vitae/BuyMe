@@ -22,12 +22,25 @@
     <a href="register.jsp">Create your BuyMe account</a>
 </div>
 <%} else { %>
+<%@include file="auctionClosedCheck.jsp" %>
+<%
+    response.setIntHeader("Refresh", 20);
+    Account userAccount = (Account) session.getAttribute("userAccount");
+    if (userAccount.getAccessLevel() > 1) {%>
 <div class="marginLeft-Right">
     <h1> BuyMe</h1>
     <hr>
     <a href="auctionList.jsp">Check out the list of auctions</a>
     <br>
 </div>
+<% } else { %>
+<div class="marginLeft-Right">
+    <h1> BuyMe</h1>
+    <hr>
+    <a href="profile.jsp">Go to admin functions</a>
+    <br>
+</div>
+<% } %>
 <% } %>
 </body>
 

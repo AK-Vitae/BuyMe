@@ -28,11 +28,13 @@
     <br/>
     <a href="login.jsp">Please Login</a>
     <%} else { %>
+    <%@include file="auctionClosedCheck.jsp" %>
     <%
         Account userAccount = (Account) session.getAttribute("userAccount");
     %>
     <h2>Bid History</h2>
     <%
+        response.setIntHeader("Refresh", 20);
         Database db = new Database();
         Connection conn = null;
         Statement st = null;

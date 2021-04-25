@@ -29,6 +29,9 @@
     <%} else { %>
     <%@include file="auctionClosedCheck.jsp" %>
     <h2>Auctions</h2>
+    <%
+        Account userAccount = (Account) session.getAttribute("userAccount");
+        if (userAccount.getAccessLevel() == 3) {%>
     <div class="auction-btn-group">
         <a href="auction.jsp?type=car">
             <button>Start a New Car Auction</button>
@@ -40,6 +43,7 @@
             <button>Start a New Aircraft Auction</button>
         </a>
     </div>
+    <%}%>
     <input type="text" id="myInput" onkeyup="search()" placeholder="Search for an auction">
     <ul id="myUL">
         <%
