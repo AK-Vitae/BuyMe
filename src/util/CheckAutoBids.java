@@ -12,18 +12,17 @@ import database.Database;
 public class CheckAutoBids {
 
     public static void run() throws IOException {
-//        CheckListings.run();
+        CheckListings.run();
         Connection conn = new Database().getConnection();
         try {
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM autobid JOIN bid USING(listingID) WHERE bidvalue = (SELECT MAX(bidvalue) FROM bid WHERE listingID = autobid.listingID);");
+            ResultSet rs = st.executeQuery("SELECT * FROM autobid JOIN bid USING(listingID) JOIN auctionItem USING(listingID) WHERE bidvalue = (SELECT MAX(bidvalue) FROM bid WHERE listingID = autobid.listingID) and closingDate > NOW();");
             while (rs.next()) {
                 int autoBidder = rs.getInt(2);
                 int maxBidder = rs.getInt(5);
                 double ceil = rs.getDouble(3);
                 double incr = rs.getDouble(4);
                 double maxBid = rs.getDouble(6);
-                // System.out.println("Got autoBidder of " + autoBidder + " and maxBidder of " + maxBidder + ". ceil, incr, maxBid: " + ceil + " " + incr + " " + maxBid);
                 if (autoBidder != maxBidder) {
                     if (maxBid + incr <= ceil) {
                         PreparedStatement pst = conn.prepareStatement("INSERT INTO bid (listingID, bidder, bidValue, bidDate) VALUES (?,?,?,NOW());");
@@ -33,7 +32,7 @@ public class CheckAutoBids {
                         pst.executeUpdate();
                         rs.close();
                         // re-query to get updated max-bids
-                        rs = st.executeQuery("SELECT * FROM autobid JOIN bid USING(listingID) WHERE bidvalue = (SELECT MAX(bidvalue) FROM bid WHERE listingID = autobid.listingID)");
+                        rs = st.executeQuery("SELECT * FROM autobid JOIN bid USING(listingID) JOIN auctionItem USING(listingID) WHERE bidvalue = (SELECT MAX(bidvalue) FROM bid WHERE listingID = autobid.listingID) and closingDate > NOW();");
                     } else {
                         // add new alert and delete entry from autobid table
                         conn.createStatement().executeUpdate("DELETE FROM autobid WHERE listingID = " + rs.getInt(1) + " AND userID = " + autoBidder + ";");

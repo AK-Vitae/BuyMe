@@ -102,6 +102,7 @@
     if (resultBid < 1) {
         out.println("<div class=\"container signin\"><p>There was a problem submitting your bid<br><a href=\"auctionList.jsp\">Back to Auction List</a>.</p> </div>");
     } else {
+        CheckAutoBids.run();
         out.println("<div class=\"container signin\"><p>Your Bid of " + currency.format(bidValue) + " has been submitted <br><a href=\" auctionList.jsp\">Go back to the list of auctions</a>.</p> </div>");
 %>
 <%@ include file="bidAlertSend.jsp" %>
