@@ -11,6 +11,8 @@
 <%@ page import="java.text.NumberFormat" %>
 <%@ page import="java.io.*" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.text.DateFormat" %>
+<%@ page import="java.util.Calendar" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,17 +36,21 @@
     ResultSet rs = null;
     Statement st = null;
     boolean sendA = false;
-    Locale locale = new Locale("en", "US");
-    NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
     Account userAccount = (Account) session.getAttribute("userAccount");
     String auctionStatus = request.getParameter("status");
     double bidValue = Double.parseDouble(request.getParameter("bid"));
     int bidder = userAccount.getAccountNumber();
     double maxBid = 0;
     int listingID = Integer.parseInt(request.getParameter("listingId"));
+    AuctionItem item = new AuctionItem(listingID);
+    String closingDate = item.getClosingDate();
+    Locale locale = new Locale("en", "US");
+    NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
+
     try {
         conn = db.getConnection();
         st = conn.createStatement();
+
         rs = st.executeQuery("SELECT MAX(bidValue) FROM bid WHERE listingID =" + listingID + ";");
         rs.next();
         maxBid = rs.getDouble("MAX(bidValue)");
@@ -73,31 +79,36 @@
     }
     try {
         conn2 = db.getConnection();
-        if (maxBid >= bidValue) {%>
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
+        String strDate = dateFormat.format(date);
+        if (maxBid >= bidValue) {
+%>
 <form>
-    <div class="signin">
-        <p>Bid entered is too low <a href="auctionDetails.jsp?status=open&listingId=<%out.print(listingID);%>">Go back
-            to list of auctions</a>.
-        </p>
-    </div>
+    <input type="hidden" id="status" name="status" value="<%out.print("open");%>">
+    <input type="hidden" id="listingId" name="listingId" value="<%out.print(listingID);%>">
+    <button type="submit" class="loginbtn" formaction="auctionDetails.jsp">Bid was too low. Go back to Item</button>
 </form>
 <%
-} else {
+
+} else if (closingDate.compareTo(strDate) > 0) {
     String query2 = "INSERT INTO bid (listingID, bidder, bidValue, bidDate) VALUES (?, ?, ?, now());";
+
     ps = conn2.prepareStatement(query2);
     ps.setInt(1, listingID);
     ps.setInt(2, bidder);
     ps.setDouble(3, bidValue);
     int resultBid = ps.executeUpdate();
     if (resultBid < 1) {
-        out.println("failed");
-        out.println("<div class=\"container signin\"><p>There was a problem submitting your bid<br><a href=\"auctionList.jsp\">Go back to the list of auctions</a>.</p> </div>");
+        out.println("<div class=\"container signin\"><p>There was a problem submitting your bid<br><a href=\"auctionList.jsp\">Back to Auction List</a>.</p> </div>");
     } else {
         out.println("<div class=\"container signin\"><p>Your Bid of " + currency.format(bidValue) + " has been submitted <br><a href=\" auctionList.jsp\">Go back to the list of auctions</a>.</p> </div>");
 %>
 <%@ include file="bidAlertSend.jsp" %>
 <%
             }
+        } else {
+            out.println("<div class=\"container signin\"><p>Time Ran Out<br><a href=\"auctionList.jsp\">Go Back to Auction List</a>.</p> </div>");
         }
 
     } catch (SQLException se) {
@@ -118,6 +129,7 @@
             e.printStackTrace();
         }
     }
+
 %>
 </body>
 
