@@ -27,6 +27,7 @@
     <br/>
     <a href="login.jsp">Please Login</a>
     <%} else { %>
+    <%@include file="auctionClosedCheck.jsp" %>
     <h2>Auctions</h2>
     <div class="auction-btn-group">
         <a href="auction.jsp?type=car">
@@ -39,7 +40,7 @@
             <button>Start a New Aircraft Auction</button>
         </a>
     </div>
-    <input type="text" id="myInput" onkeyup="search()" placeholder="Search for an auction" style="width:60%;">
+    <input type="text" id="myInput" onkeyup="search()" placeholder="Search for an auction">
     <ul id="myUL">
         <%
             response.setIntHeader("Refresh", 10);

@@ -47,7 +47,7 @@
             st = conn.createStatement();
             int listingId = auctionItem.getListingId();
 
-            rs = st.executeQuery("SELECT * FROM bid WHERE listingID='" + listingId + "' ORDER BY bidDate DESC;");
+            rs = st.executeQuery("SELECT * FROM bid WHERE listingID='" + listingId + "' ORDER BY bidValue DESC;");
             if (!rs.next()) {
                 out.print("<h2>No bids placed for this auction</h2>");
             } else {

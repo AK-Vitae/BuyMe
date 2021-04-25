@@ -42,7 +42,7 @@
         // Open DB Connection and get parameters
         connA = dbA.getConnection();
         stA = connA.createStatement();
-        rsA = stA.executeQuery("SELECT * FROM bid WHERE listingID =" + listingId + " and bidValue = (Select MAX(bidValue) from bid where listingID = " + listingId + ")");
+        rsA = stA.executeQuery("SELECT * FROM bid WHERE listingID =" + listingId + " AND bidValue = (Select MAX(bidValue) from bid where listingID = " + listingId + ")");
         if (rsA.next()) {
             maxBidder = rsA.getInt("bidder");
         } else {
