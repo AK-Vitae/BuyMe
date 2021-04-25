@@ -24,6 +24,12 @@ VALUES ('admin', 'admin', 'admin', 'admin', 'admin@buyme.com', 1, true),
        ('John', 'Smith', 'jsmith', '1234', 'jsmith@buyme.com', 2, true),
        ('Jane', 'Doe', 'jdoe', '4321', 'jdoe@buyme.com', 2, true);
 
+-- Adding data for test users
+INSERT INTO account (first_name, last_name, username, password, email, access_level, is_active)
+VALUES ('Joe', 'Shmoe', 'jshmoe', '1234', 'jshmoe@gmail.com', 3, true),
+       ('Zoe', 'Long', 'zlong', '1234', 'zlong@google.com', 3, true),
+       ('Kevin', 'Motts', 'kmotts', '1234', 'kmotts@gmail.com', 3, true);
+
 -- Q&A
 DROP TABLE IF EXISTS `question`;
 CREATE TABLE `question`
@@ -105,6 +111,25 @@ CREATE TABLE `aircraft`
     PRIMARY KEY (`listingID`),
     FOREIGN KEY (`listingID`) REFERENCES auctionItem (`listingID`) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- Inserting some completed auctions
+-- Inserting a car
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice,soldPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser) VALUES
+('acd', 'Car', 12000.00, 18000.00,18000.00, 'white', 'black', 'Pasat', 'Volkswagon', 'used', 5, '2021-04-23 12:30:00', 2015, '2021-04-11 16:30:00', 4, 6);
+INSERT INTO car (listingID, fuelType, mileage, driveType, bodyType, transmission) VALUES
+(LAST_INSERT_ID(), 'super', 50000, 'FWD', 'Sedan', 'automatic');
+
+-- Inserting a boat
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice,soldPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser) VALUES
+('adc', 'Boat', 130000.00, 200000.00,219000.00, 'black', 'red', 'X22', 'Mastercraft', 'new', 5, '2021-04-24 12:30:00', 2019, '2020-04-12 16:30:00', 5, 4);
+INSERT INTO boat (listingID, engineType, boatType, hullMaterial, primaryFuelType) VALUES
+(LAST_INSERT_ID(), 'Direct Drive', 'Dragger', 'Fiberglass', 'Other');
+
+-- Inserting a aircraft
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller) VALUES
+('ccb', 'Aircraft', 5750000.00, 5760000.00, 'white and blue', 'white', 'XLS', 'Cessna', 'used', 9, '2021-04-18 12:30:00', 2019, '2021-04-12 16:30:00', 6);
+INSERT INTO aircraft (listingID, airCategory, engineHours, avionics) VALUES
+(LAST_INSERT_ID(), 'Twin Piston', 2231, 'Collins Pro Line 21 Avionics 4 Tube EFIS');
 
 -- Bid
 DROP TABLE IF EXISTS `bid`;
