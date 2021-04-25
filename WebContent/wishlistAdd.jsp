@@ -62,7 +62,7 @@
         <input type="text" value="<%out.print(auctionItem.getModel());%>" name="model" id="model" required>
 
         <label for="condition"><b>New/Used</b></label>
-        <select name="condition" id="condition">
+        <select name="condition" id="condition" required>
             <option value="" selected disabled hidden>Select the condition of the vehicle</option>
             <option value="New">New</option>
             <option value="Used">Used</option>

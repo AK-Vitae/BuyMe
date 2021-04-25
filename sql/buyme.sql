@@ -197,6 +197,15 @@ UNLOCK TABLES;
 SELECT * FROM bid;
 
 SELECT * FROM bid WHERE listingID = 2 ORDER BY bidDate DESC;
+
+DROP TABLE IF EXISTS `autobid`;
+CREATE TABLE `autobid` (
+                           `listingID` int NOT NULL,
+                           `userID` int NOT NULL,
+                           `ceiling` double NOT NULL,
+                           `increment` double NOT NULL,
+                           PRIMARY KEY (`listingID`,`userID`)
+);
 -- Alerts
 DROP TABLE IF EXISTS `alert`;
 CREATE TABLE `alert`
@@ -211,14 +220,14 @@ CREATE TABLE `alert`
         ON UPDATE CASCADE
 );
 
-LOCK TABLES alert WRITE;
-INSERT INTO alert (`user`, alertTopic, alertMessage, isRead) VALUES
-(5, 'Item Listed', 'The car you wanted is up for auction', TRUE),
-(5, 'Auction Won', 'Congrats you won the auction', FALSE),
-(6, 'Item Listed', 'The car you wanted is up for auction', TRUE),
-(6, 'Auction Won', 'Congrats you won the auction', FALSE);
-UNLOCK TABLES;
-SELECT * FROM alert;
+-- LOCK TABLES alert WRITE;
+-- INSERT INTO alert (`user`, alertTopic, alertMessage, isRead) VALUES
+-- (5, 'Item Listed', 'The car you wanted is up for auction', TRUE),
+-- (5, 'Auction Won', 'Congrats you won the auction', FALSE),
+-- (6, 'Item Listed', 'The car you wanted is up for auction', TRUE),
+-- (6, 'Auction Won', 'Congrats you won the auction', FALSE);
+-- UNLOCK TABLES;
+-- SELECT * FROM alert;
 
 DROP TABLE IF EXISTS `wishlist`;
 CREATE TABLE `wishlist`
@@ -228,6 +237,7 @@ CREATE TABLE `wishlist`
     `manufacturer` VARCHAR(50),
     `condition`    VARCHAR(5),
     `maxPrice`     DECIMAL(20, 2),
+    `isAvailable`  BOOLEAN,
     PRIMARY KEY (`user`, `model`, `manufacturer`, `condition`, `maxPrice`),
     FOREIGN KEY(`user`) REFERENCES account(`account_number`) ON DELETE CASCADE
         ON UPDATE CASCADE

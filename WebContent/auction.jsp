@@ -37,7 +37,7 @@
 
         <%if (auctionType.equalsIgnoreCase("car")) {%>
         <label for="manufacturer"><b>Manufacturer</b></label>
-        <select name="manufacturer" id="manufacturer">
+        <select name="manufacturer" id="manufacturer" required>
             <option value="" selected disabled hidden>Select a Manufacturer</option>
             <option value="AMC">AMC</option>
             <option value="Acura">Acura</option>
@@ -146,7 +146,7 @@
         <input type="text" placeholder="Enter the model name" name="model" id="model" required>
 
         <label for="condition"><b>New/Used</b></label>
-        <select name="condition" id="condition">
+        <select name="condition" id="condition" required>
             <option value="" selected disabled hidden>Select the condition of the vehicle</option>
             <option value="New">New</option>
             <option value="Used">Used</option>
