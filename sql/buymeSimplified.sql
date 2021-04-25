@@ -124,6 +124,11 @@ INSERT INTO auctionItem (productID, type, listPrice, minSellPrice,soldPrice, ext
 INSERT INTO car (listingID, fuelType, mileage, driveType, bodyType, transmission) VALUES
 (LAST_INSERT_ID(), 'super', 50000, 'FWD', 'Sedan', 'automatic');
 
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller) VALUES
+('acd', 'Car', 12000.00, 18000.00, 'blue', 'black', 'Rav4', 'Toyota', 'new', 5, '2021-05-23 12:30:00', 2016, '2021-04-10 14:30:20', 6);
+INSERT INTO car (listingID, fuelType, mileage, driveType, bodyType, transmission) VALUES
+(LAST_INSERT_ID(), 'super', 7653 , '4WD', 'Minivan', 'automatic');
+
 -- Inserting a boat
 INSERT INTO auctionItem (productID, type, listPrice, minSellPrice,soldPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser) VALUES
 ('adc', 'Boat', 130000.00, 200000.00,219000.00, 'black', 'red', 'X22', 'Mastercraft', 'new', 5, '2021-04-24 12:30:00', 2019, '2020-04-12 16:30:00', 5, 4);
