@@ -114,42 +114,32 @@ CREATE TABLE `aircraft`
 
 -- Inserting some completed auctions
 -- Inserting a car
-INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, soldPrice, exteriorColor, interiorColor, model,
-                         manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser)
-VALUES ('acd', 'Car', 12000.00, 18000.00, 18000.00, 'white', 'black', 'Pasat', 'Volkswagon', 'used', 5,
-        '2021-04-23 12:30:00', 2015, '2021-04-11 16:30:00', 4, 6);
-INSERT INTO car (listingID, fuelType, mileage, driveType, bodyType, transmission)
-VALUES (LAST_INSERT_ID(), 'super', 50000, 'FWD', 'Sedan', 'automatic');
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice,soldPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser) VALUES
+('acd', 'Car', 12000.00, 18000.00,18000.00, 'white', 'black', 'Pasat', 'Volkswagon', 'used', 5, '2021-04-23 12:30:00', 2015, '2021-04-11 16:30:00', 4, 6);
+INSERT INTO car (listingID, fuelType, mileage, driveType, bodyType, transmission) VALUES
+(LAST_INSERT_ID(), 'super', 50000, 'FWD', 'Sedan', 'automatic');
 
-INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, soldPrice, exteriorColor, interiorColor, model,
-                         manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser)
-VALUES ('azx', 'Car', 12000.00, 18000.00, 18000.00, 'red', 'white', 'Pasat', 'Volkswagon', 'new', 5,
-        '2021-04-23 14:30:00', 2021, '2021-04-11 18:30:00', 6, 5);
-INSERT INTO car (listingID, fuelType, mileage, driveType, bodyType, transmission)
-VALUES (LAST_INSERT_ID(), 'super', 50000, 'FWD', 'Sedan', 'automatic');
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice,soldPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser) VALUES
+('azx', 'Car', 12000.00, 18000.00,18000.00, 'red', 'white', 'Pasat', 'Volkswagon', 'new', 5, '2021-04-23 14:30:00', 2021, '2021-04-11 18:30:00', 6, 5);
+INSERT INTO car (listingID, fuelType, mileage, driveType, bodyType, transmission) VALUES
+(LAST_INSERT_ID(), 'super', 50000, 'FWD', 'Sedan', 'automatic');
 
 -- Inserting a boat
-INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, soldPrice, exteriorColor, interiorColor, model,
-                         manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser)
-VALUES ('adc', 'Boat', 130000.00, 200000.00, 219000.00, 'black', 'red', 'X22', 'Mastercraft', 'new', 5,
-        '2021-04-24 12:30:00', 2019, '2020-04-12 16:30:00', 5, 4);
-INSERT INTO boat (listingID, engineType, boatType, hullMaterial, primaryFuelType)
-VALUES (LAST_INSERT_ID(), 'Direct Drive', 'Dragger', 'Fiberglass', 'Other');
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice,soldPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller, purchaser) VALUES
+('adc', 'Boat', 130000.00, 200000.00,219000.00, 'black', 'red', 'X22', 'Mastercraft', 'new', 5, '2021-04-24 12:30:00', 2019, '2020-04-12 16:30:00', 5, 4);
+INSERT INTO boat (listingID, engineType, boatType, hullMaterial, primaryFuelType) VALUES
+(LAST_INSERT_ID(), 'Direct Drive', 'Dragger', 'Fiberglass', 'Other');
 
 -- Inserting a aircraft
-INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer,
-                         `condition`, capacity, closingDate, `year`, listDate, seller)
-VALUES ('ccb', 'Aircraft', 5750000.00, 5760000.00, 'white and blue', 'white', 'XLS', 'Cessna', 'used', 9,
-        '2021-04-18 12:30:00', 2019, '2021-04-12 16:30:00', 6);
-INSERT INTO aircraft (listingID, airCategory, engineHours, avionics)
-VALUES (LAST_INSERT_ID(), 'Twin Piston', 2231, 'Collins Pro Line 21 Avionics 4 Tube EFIS');
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller) VALUES
+('ccb', 'Aircraft', 5750000.00, 5760000.00, 'white and blue', 'white', 'XLS', 'Cessna', 'used', 9, '2021-04-18 12:30:00', 2019, '2021-04-12 16:30:00', 6);
+INSERT INTO aircraft (listingID, airCategory, engineHours, avionics) VALUES
+(LAST_INSERT_ID(), 'Twin Piston', 2231, 'Collins Pro Line 21 Avionics 4 Tube EFIS');
 
-INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer,
-                         `condition`, capacity, closingDate, `year`, listDate, seller)
-VALUES ('cbab', 'Aircraft', 13700000.00, 15000000.00, 'red and black', 'white', '747', 'Boeing', 'used', 246,
-        '2021-02-18 10:30:00', 2019, '2021-04-30 16:30:00', 5);
-INSERT INTO aircraft (listingID, airCategory, engineHours, avionics)
-VALUES (LAST_INSERT_ID(), 'Jet', 3100, 'EFIS (Electronic Flight Instrument System) Six-Tube Honeywell DU-875');
+INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller) VALUES
+('cbab', 'Aircraft', 13700000.00, 15000000.00, 'red and black', 'white', '747', 'Boeing', 'used', 246, '2021-04-30 16:30:00', 2019, '2021-02-18 10:30:00', 5);
+INSERT INTO aircraft (listingID, airCategory, engineHours, avionics) VALUES
+(LAST_INSERT_ID(), 'Jet', 3100, 'EFIS (Electronic Flight Instrument System) Six-Tube Honeywell DU-875');
 
 -- Bid
 DROP TABLE IF EXISTS `bid`;
