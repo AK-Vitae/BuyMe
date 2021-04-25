@@ -108,8 +108,9 @@
                             try {
                                 Locale locale = new Locale("en", "US");
                                 NumberFormat currency = NumberFormat.getCurrencyInstance(locale);
+                                AuctionItem auctionItem = new AuctionItem(listingID);
 
-                                String message1 = "Congrats! You won the auction listingID: " + listingID + " with your bid of " + currency.format(finalBid) + "!";
+                                String message1 = "Congrats! You won the auction for: " + auctionItem.getAuctionItemName() + " with your bid of " + currency.format(finalBid) + "!";
                                 connect3 = dbCAC4.getConnection();
                                 String query = "INSERT INTO alert (user, alertTopic, alertMessage, isRead) VALUES (?, ?, ?, ?);";
                                 prepStat = connect3.prepareStatement(query);
