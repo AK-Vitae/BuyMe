@@ -45,12 +45,13 @@
             userAccount.setEmail(email);
             userAccount.setAccessLevel(accessLevel);
 
-            session.setAttribute("userAccount", userAccount);
-            session.setAttribute("user", username);
+
             if (!rs.getBoolean("is_active")) {
-                int i = st.executeUpdate("UPDATE account SET is_active = true WHERE username='" + username + "' AND password='" + password + "';");
-                out.println("<div class=\"container signin\"><p>Account Reactivated <br><a href=\"profile.jsp\">Go to Profile</a>.</p> </div>");
+//                int i = st.executeUpdate("UPDATE account SET is_active = true WHERE username='" + username + "' AND password='" + password + "';");
+                out.println("<div class=\"container signin\"><p>Account has been deactivated <br><a href=\"index.jsp\">Create a new account</a>.</p> </div>");
             } else {
+                session.setAttribute("userAccount", userAccount);
+                session.setAttribute("user", username);
                 response.sendRedirect("profile.jsp");
             }
         } else {
