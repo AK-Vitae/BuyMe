@@ -50,7 +50,7 @@
             out.print("<table class=\"center\" style=\"width: 15%;\">");
             out.print("<caption style=\"text-align: center;\">Total Earnings</caption>");
             out.print("<tr> <th style=\"text-align: center;\">Total Earnings</th> </tr>");
-            rs = st.executeQuery("SELECT SUM(minSellPrice) AS `Total Earnings` FROM auctionItem;");
+            rs = st.executeQuery("SELECT SUM(soldPrice) AS `Total Earnings` FROM auctionItem;");
             if (!rs.next()) {
                 out.print("<tr> <td style=\"text-align:center\">No earnings recorded</td> </tr>");
             } else {
@@ -69,7 +69,7 @@
             out.print("<th style=\"text-align: center;\">Quantity</th>");
             out.print("<th style=\"text-align: center;\">Earnings</th>");
             out.print("</tr>");
-            rs = st.executeQuery("SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(minSellPrice) AS Earnings " +
+            rs = st.executeQuery("SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(soldPrice) AS Earnings " +
                     "FROM auctionItem " +
                     "GROUP BY manufacturer, model;");
             if (!rs.next()) {
@@ -97,7 +97,7 @@
             out.print("<th style=\"text-align: center;\">Item Type</th>");
             out.print("<th style=\"text-align: center;\">Earnings</th>");
             out.print("</tr>");
-            rs = st.executeQuery("SELECT type AS `Item Type`, SUM(minSellPrice) AS `Earnings` " +
+            rs = st.executeQuery("SELECT type AS `Item Type`, SUM(soldPrice) AS `Earnings` " +
                     "FROM auctionItem " +
                     "GROUP BY type;");
             if (!rs.next()) {
@@ -123,7 +123,7 @@
             out.print("<th style=\"text-align: center;\">username</th>");
             out.print("<th style=\"text-align: center;\">Earnings</th>");
             out.print("</tr>");
-            rs = st.executeQuery("SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.minSellPrice) AS Earnings " +
+            rs = st.executeQuery("SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.soldPrice) AS Earnings " +
                     "FROM account a INNER JOIN auctionItem aI " +
                     "ON a.account_number = aI.seller " +
                     "GROUP BY aI.seller;");
@@ -154,9 +154,9 @@
             out.print("<th style=\"text-align: center;\">Quantity</th>");
             out.print("<th style=\"text-align: center;\">Earnings</th>");
             out.print("</tr>");
-            rs = st.executeQuery("SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(minSellPrice) AS Earnings " +
+            rs = st.executeQuery("SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(soldPrice) AS Earnings " +
                     "FROM auctionItem " +
-                    "WHERE minSellPrice IS NOT NULL " +
+                    "WHERE soldPrice IS NOT NULL " +
                     "GROUP BY manufacturer, model " +
                     "ORDER BY Quantity DESC " +
                     "LIMIT 5;");
@@ -187,7 +187,7 @@
             out.print("<th style=\"text-align: center;\">username</th>");
             out.print("<th style=\"text-align: center;\">Total Money Spent</th>");
             out.print("</tr>");
-            rs = st.executeQuery("SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.minSellPrice) AS `Total Money Spent` " +
+            rs = st.executeQuery("SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.soldPrice) AS `Total Money Spent` " +
                     "FROM account a INNER JOIN auctionItem aI " +
                     "ON a.account_number = aI.purchaser " +
                     "GROUP BY aI.purchaser " +

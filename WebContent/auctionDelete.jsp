@@ -48,7 +48,8 @@
             if (result < 1) {
                 out.println("<div class=\"container signin\"><p>Error: Alert to inform bidder was not created but auction was deleted. <br> <a href=\"auctionList.jsp\">Go back to the list of auctions</a>.</p></div>");
             } else {
-                out.println("<div class=\"container signin\"><p>Auction deleted successfully <br> <a href=\"auctionList.jsp\">Go back to the list of auctions</a>.</p></div>");
+                // out.println("<div class=\"container signin\"><p>Auction deleted successfully <br> <a href=\"auctionList.jsp\">Go back to the list of auctions</a>.</p></div>");
+                response.sendRedirect("auctionList.jsp");
             }
         }
     } catch (SQLException se) {

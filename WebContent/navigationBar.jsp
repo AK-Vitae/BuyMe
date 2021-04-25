@@ -26,17 +26,7 @@
         <div class="navbar-header">
             <a class="navbar-brand" href="index.jsp">BuyMe</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" href="profile.jsp">My Profile</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="auctionList.jsp">Auctions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="questionsAndAnswers.jsp">Q&A</a>
-            </li>
-        </ul>
+
         <% if ((session.getAttribute("user") != null)) { %>
         <%
             Account userAccount = (Account) session.getAttribute("userAccount");
@@ -87,7 +77,19 @@
                 }
             }
         %>
-
+        <ul class="nav navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="profile.jsp">My Profile</a>
+            </li>
+            <%if (userAccount.getAccessLevel() > 1) { %>
+            <li class="nav-item">
+                <a class="nav-link" href="auctionList.jsp">Auctions</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="questionsAndAnswers.jsp">Q&A</a>
+            </li>
+            <%}%>
+        </ul>
         <ul class="nav navbar-nav navbar-right">
             <%if (userAccount.getAccessLevel() == 3) { %>
             <li>

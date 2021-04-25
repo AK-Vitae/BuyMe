@@ -146,7 +146,7 @@ UNLOCK TABLES;
 
 LOCK TABLES auctionItem WRITE;
 INSERT INTO auctionItem (productID, type, listPrice, minSellPrice, exteriorColor, interiorColor, model, manufacturer, `condition`, capacity, closingDate, `year`, listDate, seller) VALUES
-('ccb', 'Aircraft', 5750000.00, 5760000.00, 'white and blue', 'white', 'XLS+', 'Cessna', 'used', 9, '2021-04-18 12:30:00', 2019, '2021-04-12 16:30:00', 5);
+('ccb', 'Aircraft', 5750000.00, 5760000.00, 'white and blue', 'white', 'XLS', 'Cessna', 'used', 9, '2021-04-18 12:30:00', 2019, '2021-04-12 16:30:00', 5);
 UNLOCK TABLES;
 
 LOCK TABLES aircraft WRITE;
@@ -242,33 +242,36 @@ CREATE TABLE `wishlist`
     FOREIGN KEY(`user`) REFERENCES account(`account_number`) ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+SELECT * FROM `wishlist`;
+DELETE FROM wishlist WHERE user=6 AND model='XLS+' AND manufacturer='Cessna' AND `condition`='NEW' AND maxPrice=50.00;
 -- Transaction History
 -- SELECT * FROM auctionItem WHERE seller = 7; -- All auctions created by a user; Use a if condition to check if the auction ended without a winner
 -- SELECT * FROM auctionItem WHERE purchaser = 7; -- All auctions won by user
 -- SELECT * FROM bid WHERE bidder = 2 GROUP BY listingID, bidder; -- All auctions the user participated in
 
 -- Total Earnings - Change minSellPrice to soldPrice
-SELECT SUM(minSellPrice) AS `Total Earnings` FROM auctionItem;
+SELECT SUM(soldPrice) AS `Total Earnings` FROM auctionItem;
 -- Earnings Per Item
-SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(minSellPrice) AS Earnings FROM auctionItem GROUP BY manufacturer, model;
+SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(soldPrice) AS Earnings FROM auctionItem GROUP BY manufacturer, model;
 -- Earnings Per Item Type
-SELECT type AS `Item Type`, SUM(minSellPrice) AS `Earnings` FROM auctionItem GROUP BY type;
+SELECT type AS `Item Type`, SUM(soldPrice) AS `Earnings` FROM auctionItem GROUP BY type;
 -- Earnings Per End-User
-SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.minSellPrice) AS Earnings
+SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.soldPrice) AS Earnings
 FROM account a INNER JOIN auctionItem aI
                           ON a.account_number = aI.seller
 GROUP BY aI.seller;
 
 -- SELECT seller AS `End User`, SUM(soldPrice) AS Earnings FROM auctionItem GROUP BY seller;
 -- Best-Selling Items - Change instances of minSellPrice to soldPrice
-SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(minSellPrice) AS Earnings FROM auctionItem
-WHERE minSellPrice IS NOT NULL
+SELECT manufacturer AS Manufacturer, model AS Model, COUNT(model) AS Quantity, SUM(soldPrice) AS Earnings FROM auctionItem
+WHERE soldPrice IS NOT NULL
 GROUP BY manufacturer, model
 ORDER BY Quantity DESC
     LIMIT 5;
 
 -- Biggest Spenders -- Need Bidding History Table
-SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.minSellPrice) AS `Total Money Spent`
+SELECT a.first_name AS `First Name`, a.last_name AS `Last Name`, a.username, SUM(aI.soldPrice) AS `Total Money Spent`
 FROM account a INNER JOIN auctionItem aI
                           ON a.account_number = aI.purchaser
 GROUP BY aI.purchaser
