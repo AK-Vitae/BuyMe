@@ -49,7 +49,6 @@
 
     boolean read = false;
 
-    String status = "completed";
     //selects items whose closing dates have passed
     try {
         connect = dbCAC1.getConnection();
