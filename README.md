@@ -1,5 +1,5 @@
 # BuyMe
-
+![buyme](https://raw.githubusercontent.com/AK-Vitae/ak-website/main/images/BuyMe.png)
 ## Project Description
 
 BuyMe is a relational database system with a corresponding front-end that has the functionality of an online auction system. This is a Full Stack application developed with Java (JSP, JDBC), SQL (MySQL), and HTML/CSS/JavaScript(jQuery). BuyMe started as a simple ER diagram but was quickly translated into a DB schema in MySQL and was ultimately implemented as a dynamic web project using IntelliJ/Eclipse.
